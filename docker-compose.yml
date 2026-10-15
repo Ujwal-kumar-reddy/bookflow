@@ -39,6 +39,12 @@ services:
         condition: service_healthy
     ports:
       - "3000:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
 volumes:
   bookflow-postgres-data:
