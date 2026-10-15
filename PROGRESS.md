@@ -1,7 +1,7 @@
 # Capstone Progress Tracker — BookFlow (Session 21)
 
 **Target Deadline:** 16 October 2026, 11:59 PM IST  
-**Current Status:** Application transformed, tests passing (15/15), frontend built, Dockerfiles fixed (non-root), Helm chart linted, Terraform validated, 13 semantic commits created.  
+**Current Status:** Phase 3 Local Verification COMPLETED (Docker Compose healthy, PostgreSQL persistence verified across restart/recreate, REST CRUD verified, frontend dashboard active at localhost:3000).  
 **Application Domain:** BookFlow — Student Library Book-Lending Tracker  
 **Target Architecture:** FastAPI Backend (8000), React/Vite Frontend (3000/8080), PostgreSQL (5433 host / 5432 container), Docker Compose, GitHub Actions, Trivy, GHCR, Terraform (AWS VPC + EKS ap-south-1), Kubernetes + Helm, Prometheus + Grafana.
 
@@ -13,20 +13,20 @@
 |---|---|---|---|---|---|---|---|
 | **M1** | FastAPI starts, `/health` responds | 2 | `backend/app/main.py` | `pytest test_health` | `evidence/m2-pytest.txt` | Completed | LOCALLY VERIFIED |
 | **M1** | 4+ REST API endpoints (GET, POST, PUT, DELETE, stats, checkout, return) | 3 | `backend/app/main.py`, `backend/app/schemas.py`, `backend/app/models.py` | Pytest CRUD tests | `evidence/m2-pytest.txt` | Completed | LOCALLY VERIFIED |
-| **M1** | PostgreSQL + Alembic migration for books table | 2 | `backend/alembic/versions/0001_create_books.py` | Alembic migration code | `backend/alembic/versions/0001_create_books.py` | Completed | IMPLEMENTED |
+| **M1** | PostgreSQL + Alembic migration for books table | 2 | `backend/alembic/versions/0001_create_books.py` | Alembic migration on Postgres container | `evidence/m4-persistence-test.txt` | Completed | LOCALLY VERIFIED |
 | **M1** | React frontend renders and calls BookFlow API | 2 | `frontend/src/main.jsx`, `frontend/package.json` | `npm run build` | `evidence/m1-frontend-build.txt` | Completed | LOCALLY VERIFIED |
-| **M1** | Responsive, usable library UI (KPI cards, filters, loan modal) | 1 | `frontend/src/main.jsx`, `frontend/src/styles.css` | Browser inspection at localhost:3000 | `evidence/m1-app-browser.png` | Pending Docker start | PENDING |
+| **M1** | Responsive, usable library UI (KPI cards, filters, loan modal) | 1 | `frontend/src/main.jsx`, `frontend/src/styles.css` | Browser inspection at localhost:3000 | `evidence/m1-app-browser.png` | Completed | LOCALLY VERIFIED |
 | **M2** | `pytest` runs without errors | 3 | `backend/tests/*`, `backend/pytest.ini` | `pytest -v` (15/15 passed) | `evidence/m2-pytest.txt` | Completed | LOCALLY VERIFIED |
 | **M2** | 5+ test cases covering 3+ API endpoints (15 tests written) | 4 | `backend/tests/test_api.py` | `pytest -v` | `evidence/m2-pytest.txt` | Completed | LOCALLY VERIFIED |
 | **M2** | Isolated test database (SQLite temp in-memory / StaticPool, no prod pollution) | 2 | `backend/tests/conftest.py` | `pytest -v` (0 disk files leftover) | `evidence/m2-pytest.txt` | Completed | LOCALLY VERIFIED |
 | **M2** | `pytest.ini` and `conftest.py` properly configured | 1 | `backend/pytest.ini`, `backend/tests/conftest.py` | `pytest -v` | `backend/pytest.ini` | Completed | LOCALLY VERIFIED |
 | **M3** | Public GitHub repository URL linked in submission | 2 | Git repository remote | `git remote -v` | `evidence/m3-repo-url.txt` | Awaiting empty remote URL | PENDING |
-| **M3** | Meaningful commit messages (13 commits created) | 2 | Git commit history | `git log --oneline` | `evidence/m3-git-history.png`, `evidence/m3-git-log.txt` | Completed | LOCALLY VERIFIED |
+| **M3** | Meaningful commit messages (15 commits created) | 2 | Git commit history | `git log --oneline` | `evidence/m3-git-history.png`, `evidence/m3-git-log.txt` | Completed | LOCALLY VERIFIED |
 | **M3** | `.gitignore` excludes `.env`, `__pycache__`, `node_modules`, `.venv`, `.tfvars` | 1 | `.gitignore` | `git status --ignored` | `.gitignore` | Completed | LOCALLY VERIFIED |
-| **M4** | `backend/Dockerfile` builds successfully | 2 | `backend/Dockerfile` | `docker build -t bookflow-backend ./backend` | `evidence/m4-docker-backend-build.txt` | Pending Docker start | PENDING |
-| **M4** | `frontend/Dockerfile` multi-stage build (Node build + Nginx runtime) | 3 | `frontend/Dockerfile` | `docker build -t bookflow-frontend ./frontend` | `evidence/m4-docker-frontend-build.txt` | Completed | IMPLEMENTED |
-| **M4** | Non-root user in both Dockerfiles (10001 backend, 101 frontend) | 2 | `backend/Dockerfile`, `frontend/Dockerfile` | `id` inspection in Dockerfiles | `evidence/m4-docker-nonroot.txt` | Completed | IMPLEMENTED |
-| **M4** | `docker compose up --build` starts frontend, backend, postgres | 3 | `docker-compose.yml` | `docker compose up -d --build` | `evidence/m4-docker-compose.txt`, `evidence/m4-browser-localhost-3000.png` | Pending Docker start | PENDING |
+| **M4** | `backend/Dockerfile` builds successfully | 2 | `backend/Dockerfile` | `docker compose up -d --build` | `evidence/m4-docker-compose.txt` | Completed | LOCALLY VERIFIED |
+| **M4** | `frontend/Dockerfile` multi-stage build (Node build + Nginx runtime) | 3 | `frontend/Dockerfile` | `docker compose up -d --build` | `evidence/m4-docker-compose.txt` | Completed | LOCALLY VERIFIED |
+| **M4** | Non-root user in both Dockerfiles (10001 backend, 101 frontend) | 2 | `backend/Dockerfile`, `frontend/Dockerfile` | `id` in running containers | `evidence/m4-docker-nonroot.txt` | Completed | LOCALLY VERIFIED |
+| **M4** | `docker compose up --build` starts frontend, backend, postgres | 3 | `docker-compose.yml` | `docker compose up -d --build` (all healthy) | `evidence/m4-docker-compose.txt`, `evidence/m4-browser-localhost-3000.png` | Completed | LOCALLY VERIFIED |
 | **M5** | `.github/workflows/ci-cd.yml` present | 1 | `.github/workflows/ci-cd.yml` | Workflow syntax validation | `.github/workflows/ci-cd.yml` | Completed | IMPLEMENTED |
 | **M5** | Pipeline triggers on push to `main` | 1 | `.github/workflows/ci-cd.yml` | Push event to GitHub | `evidence/m5-actions-green-url.txt` | Awaiting remote & push approval | PENDING |
 | **M5** | `pytest` runs as pipeline quality gate | 3 | `.github/workflows/ci-cd.yml` | Actions job `test` | `evidence/m5-actions-test-step.txt` | Awaiting remote & push approval | PENDING |
@@ -84,7 +84,6 @@
 ---
 
 ## 3. Blockers and User Actions Needed
-
-1. **Empty Public GitHub Repository URL:** We need your new empty public GitHub repository URL (e.g. `https://github.com/<your-username>/bookflow.git`) so we can add the remote and wait for your explicit confirmation to push.
-2. **Docker Desktop:** Docker Desktop application is installed but needs to be opened/started from Windows Start Menu so the Docker daemon and local Kubernetes cluster (`docker-desktop` context) are active.
-3. **AWS CLI & Credentials:** When you are ready for Phase 5 / Phase 6 on EKS, provide AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION=ap-south-1`) so we can run `aws sts get-caller-identity` and generate the `terraform plan`.
+ 
+ 1. **Empty Public GitHub Repository URL:** We need your new empty public GitHub repository URL (e.g. `https://github.com/<your-username>/bookflow.git`) so we can add the remote and wait for your explicit confirmation to push.
+ 2. **AWS CLI & Credentials:** When you are ready for Phase 5 / Phase 6 on EKS, provide AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION=ap-south-1`) so we can run `aws sts get-caller-identity` and generate the `terraform plan`.
