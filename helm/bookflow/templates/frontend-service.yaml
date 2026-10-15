@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "bookflow.fullname" . }}-frontend
+  labels:
+    app: bookflow-frontend
+spec:
+  selector:
+    app: bookflow-frontend
+  ports:
+    - port: 80
+      targetPort: 8080
+      name: http

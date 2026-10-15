@@ -1,0 +1,41 @@
+frontend:
+  image: ghcr.io/YOUR_ORG/bookflow-frontend
+  tag: latest
+  imagePullPolicy: IfNotPresent
+
+backend:
+  image: ghcr.io/YOUR_ORG/bookflow-backend
+  tag: latest
+  imagePullPolicy: IfNotPresent
+
+replicaCount: 2
+namespace: bookflow
+imagePullSecrets: []
+
+postgres:
+  host: bookflow-postgres
+  database: bookflow
+  username: bookflow
+  password: bookflow_secure_pass
+
+ingress:
+  enabled: false
+  host: bookflow.local
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 60
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+monitoring:
+  serviceMonitor:
+    enabled: true

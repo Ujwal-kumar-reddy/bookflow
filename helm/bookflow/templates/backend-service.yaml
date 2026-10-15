@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "bookflow.fullname" . }}-backend
+  labels:
+    app: bookflow-backend
+spec:
+  selector:
+    app: bookflow-backend
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http
+---
+# Service alias named "backend" to resolve Nginx upstream in Kubernetes
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: bookflow-backend
+spec:
+  selector:
+    app: bookflow-backend
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http

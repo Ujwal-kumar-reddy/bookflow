@@ -1,0 +1,5 @@
+apiVersion: v2
+name: bookflow
+description: BookFlow Student Library Book-Lending Tracker Helm Chart
+version: 1.0.0
+appVersion: "1.0.0"
