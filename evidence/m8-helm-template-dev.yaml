@@ -1,0 +1,305 @@
+---
+# Source: bookflow/templates/postgres.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bookflow-postgres
+type: Opaque
+stringData:
+  username: "bookflow"
+  password: "bookflow_secure_pass"
+---
+# Source: bookflow/templates/postgres.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bookflow-postgres-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+# Source: bookflow/templates/backend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookflow-bookflow-backend
+  labels:
+    app: bookflow-backend
+spec:
+  selector:
+    app: bookflow-backend
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http
+---
+# Source: bookflow/templates/backend-service.yaml
+# Service alias named "backend" to resolve Nginx upstream in Kubernetes
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: bookflow-backend
+spec:
+  selector:
+    app: bookflow-backend
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http
+---
+# Source: bookflow/templates/frontend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookflow-bookflow-frontend
+  labels:
+    app: bookflow-frontend
+spec:
+  selector:
+    app: bookflow-frontend
+  ports:
+    - port: 80
+      targetPort: 8080
+      name: http
+---
+# Source: bookflow/templates/postgres.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookflow-postgres
+  labels:
+    app: bookflow-postgres
+spec:
+  selector:
+    app: bookflow-postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+      name: postgres
+---
+# Source: bookflow/templates/backend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookflow-bookflow-backend
+  labels:
+    app: bookflow-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bookflow-backend
+  template:
+    metadata:
+      labels:
+        app: bookflow-backend
+    spec:
+      containers:
+        - name: backend
+          image: "ghcr.io/YOUR_ORG/bookflow-backend:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              name: http
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: bookflow-postgres
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bookflow-postgres
+                  key: password
+            - name: DATABASE_URL
+              value: "postgresql+psycopg://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@bookflow-postgres:5432/bookflow"
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+---
+# Source: bookflow/templates/frontend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookflow-bookflow-frontend
+  labels:
+    app: bookflow-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bookflow-frontend
+  template:
+    metadata:
+      labels:
+        app: bookflow-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: "ghcr.io/YOUR_ORG/bookflow-frontend:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+# Source: bookflow/templates/postgres.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookflow-postgres
+  labels:
+    app: bookflow-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookflow-postgres
+  template:
+    metadata:
+      labels:
+        app: bookflow-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+              name: postgres
+          env:
+            - name: POSTGRES_DB
+              value: "bookflow"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: bookflow-postgres
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bookflow-postgres
+                  key: password
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - pg_isready -U $POSTGRES_USER -d $POSTGRES_DB
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: bookflow-postgres-data
+---
+# Source: bookflow/templates/hpa.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: bookflow-bookflow-backend
+  labels:
+    app: bookflow-backend
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: bookflow-bookflow-backend
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+---
+# Source: bookflow/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bookflow-bookflow
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: bookflow.local
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: bookflow-bookflow-backend
+                port:
+                  number: 8000
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: bookflow-bookflow-frontend
+                port:
+                  number: 80
+---
+# Source: bookflow/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: bookflow-bookflow-backend
+  labels:
+    release: kube-prometheus-stack
+    app: bookflow-backend
+spec:
+  selector:
+    matchLabels:
+      app: bookflow-backend
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
