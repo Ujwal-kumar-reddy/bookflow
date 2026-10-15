@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-8.3.4, pluggy-1.7.0 -- C:\Users\iamab\Downloads\devops-heros-main (1)\devops-heros-main\Devops-Capstone\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\iamab\Downloads\devops-heros-main (1)\devops-heros-main\Devops-Capstone\backend
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 15 items
+
+backend\tests\test_api.py::test_health PASSED                            [  6%]
+backend\tests\test_api.py::test_ready PASSED                             [ 13%]
+backend\tests\test_api.py::test_root PASSED                              [ 20%]
+backend\tests\test_api.py::test_metrics PASSED                           [ 26%]
+backend\tests\test_api.py::test_create_book_success PASSED               [ 33%]
+backend\tests\test_api.py::test_create_book_validation_error PASSED      [ 40%]
+backend\tests\test_api.py::test_list_books_and_filters PASSED            [ 46%]
+backend\tests\test_api.py::test_get_book_and_not_found PASSED            [ 53%]
+backend\tests\test_api.py::test_update_book PASSED                       [ 60%]
+backend\tests\test_api.py::test_checkout_book_success PASSED             [ 66%]
+backend\tests\test_api.py::test_checkout_already_borrowed_fails PASSED   [ 73%]
+backend\tests\test_api.py::test_return_book_success PASSED               [ 80%]
+backend\tests\test_api.py::test_return_available_book_fails PASSED       [ 86%]
+backend\tests\test_api.py::test_delete_book PASSED                       [ 93%]
+backend\tests\test_api.py::test_book_stats PASSED                        [100%]
+
+============================== warnings summary ===============================
+backend\.venv\Lib\site-packages\starlette\testclient.py:40
+  C:\Users\iamab\Downloads\devops-heros-main (1)\devops-heros-main\Devops-Capstone\backend\.venv\Lib\site-packages\starlette\testclient.py:40: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 15 passed, 1 warning in 0.35s ========================
