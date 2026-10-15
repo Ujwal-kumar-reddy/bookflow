@@ -1,0 +1,14 @@
+25d6f56 docs(progress): update rubric milestone table and audit resolutions across M1-M10
+77bb722 docs(terraform): update infrastructure README with cost controls and commands
+b2ada61 chore(config): add dockerignore rules, backend package init, and monitoring values
+27906e5 docs(readme): author comprehensive BookFlow documentation, architecture guide, and adaptations record
+fb5e5d9 feat(helm): package BookFlow Kubernetes chart with multi-replica deployments, ingress, HPA, and ServiceMonitor
+52ff76d feat(terraform): configure valid HCL infrastructure with VPC, EKS, EBS CSI, and ELB tags
+6295245 ci(pipeline): configure GitHub Actions workflow with Trivy security scans and safe conditional deployment
+f932c98 feat(docker): configure non-root multi-stage frontend and robust Compose stack with healthchecks
+6e30a03 feat(frontend): build modern BookFlow lending tracker UI with React 18 and Vite 5
+9b9d4cb test(backend): implement isolated in-memory test suite with conftest fixtures and 15 tests
+af70229 feat(db): create initial Alembic migration for books circulation table
+fe723af feat(backend): implement REST API endpoints with circulation rules and Prometheus metrics
+e7409c8 feat(backend): implement BookFlow data model and Pydantic schemas for library tracker
+f25a758 feat(core): establish project tracking, evidence structure, and comprehensive gitignore
