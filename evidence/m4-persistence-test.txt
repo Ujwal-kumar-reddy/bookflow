@@ -1,0 +1,39 @@
+﻿=================================================================
+POSTGRESQL DATA PERSISTENCE VERIFICATION ACROSS CONTAINER RESTARTS
+=================================================================
+
+[Step 1] Capturing baseline state before restart...
+  Baseline Stats: Total=4, Available=3, Borrowed=1
+  Baseline Book IDs: [5, 4, 2, 1]
+    - ID 5: 'Continuous Delivery' | Status: AVAILABLE | Borrower: None
+    - ID 4: 'Site Reliability Engineering' | Status: AVAILABLE | Borrower: None
+    - ID 2: 'The DevOps Handbook (Second Edition)' | Status: AVAILABLE | Borrower: None
+    - ID 1: 'Designing Data-Intensive Applications' | Status: BORROWED | Borrower: Aarav Sharma (STU-2026-001)
+
+[Step 2] Executing 'docker compose restart'...
+  
+Waiting for services to become healthy...
+  Post-Restart Stats: Total=4, Available=3, Borrowed=1
+  -> PASSED: All records intact after 'docker compose restart'.
+
+[Step 3] Executing 'docker compose down' (containers removed, volume preserved)...
+  
+
+[Step 4] Executing 'docker compose up -d' (recreating containers from image)...
+  
+Waiting for services to become healthy...
+  Post-Recreation Stats: Total=4, Available=3, Borrowed=1
+  -> PASSED: All records intact after container destruction and recreation!
+
+[Step 5] Direct verification inside PostgreSQL via psql CLI...
+  id |                 title                 |  status   |        borrower_name        |  due_date  
+  ----+---------------------------------------+-----------+-----------------------------+------------
+    1 | Designing Data-Intensive Applications | BORROWED  | Aarav Sharma (STU-2026-001) | 2026-10-29
+    2 | The DevOps Handbook (Second Edition)  | AVAILABLE |                             | 
+    4 | Site Reliability Engineering          | AVAILABLE |                             | 
+    5 | Continuous Delivery                   | AVAILABLE |                             | 
+  (4 rows)
+
+=================================================================
+VERIFICATION COMPLETE: POSTGRESQL DATA FULLY PERSISTENT!
+=================================================================

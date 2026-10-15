@@ -1,0 +1,3 @@
+﻿Container: /devops-capstone-postgres-1 | Image: postgres:16-alpine | Status: running | Health: healthy
+Container: /devops-capstone-backend-1 | Image: devops-capstone-backend | Status: running | Health: healthy
+Container: /devops-capstone-frontend-1 | Image: devops-capstone-frontend | Status: running | Health: healthy

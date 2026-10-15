@@ -1,0 +1,4 @@
+﻿=== BACKEND USER ID ===  
+uid=10001(appuser) gid=10001(appuser) groups=10001(appuser)
+=== FRONTEND USER ID ===  
+uid=101(nginx) gid=101(nginx) groups=101(nginx),101(nginx)

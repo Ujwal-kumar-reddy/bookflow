@@ -9,17 +9,17 @@ This index maps every required submission artifact defined in [GRADING.md](../GR
 | **M1** | Python dependencies | `backend/requirements.txt` | Requirements file | In Progress | IMPLEMENTED |
 | **M1** | Frontend source files | `frontend/` | Source code (React/Vite) | In Progress | IMPLEMENTED |
 | **M1** | Docker Compose definition | `docker-compose.yml` | Compose YAML | In Progress | IMPLEMENTED |
-| **M1** | Browser screenshot of running application | `evidence/m1-app-browser.png` | Screenshot | Pending docker compose run | PENDING |
-| **M2** | Backend test suite | `backend/tests/` | Pytest source files | In Progress | IMPLEMENTED |
-| **M2** | Pytest configuration / fixtures | `backend/pytest.ini`, `backend/conftest.py` | Config / Fixtures | In Progress | IMPLEMENTED |
-| **M2** | Terminal output of passing tests (`pytest -v`) | `evidence/m2-pytest.txt`, `evidence/m2-pytest.png` | Command log & Screenshot | Pending test run | PENDING |
+| **M1** | Browser screenshot of running application | `evidence/m1-app-browser.png` | Screenshot | Verified at http://localhost:3000 | LOCALLY VERIFIED |
+| **M2** | Backend test suite | `backend/tests/` | Pytest source files | 15/15 passing in 0.35s | LOCALLY VERIFIED |
+| **M2** | Pytest configuration / fixtures | `backend/pytest.ini`, `backend/conftest.py` | Config / Fixtures | Configured & verified | LOCALLY VERIFIED |
+| **M2** | Terminal output of passing tests (`pytest -v`) | `evidence/m2-pytest.txt`, `evidence/m2-pytest.png` | Command log & Screenshot | 15/15 passed | LOCALLY VERIFIED |
 | **M3** | Public GitHub repository URL | `evidence/m3-repo-url.txt` | URL | Awaiting user remote | PENDING |
-| **M3** | Commit history showing 10+ meaningful commits | `evidence/m3-git-history.png`, `evidence/m3-git-log.txt` | Screenshot & Git log | In Progress (building commits) | PENDING |
+| **M3** | Commit history showing 10+ meaningful commits | `evidence/m3-git-history.png`, `evidence/m3-git-log.txt` | Screenshot & Git log | 15 commits created | LOCALLY VERIFIED |
 | **M3** | `.gitignore` excluding secrets, venv, cache | `.gitignore` | Config file | Completed | LOCALLY VERIFIED |
-| **M4** | Backend Dockerfile (non-root) | `backend/Dockerfile` | Dockerfile | In Progress | IMPLEMENTED |
-| **M4** | Frontend multi-stage Dockerfile (non-root) | `frontend/Dockerfile` | Dockerfile | In Progress | IMPLEMENTED |
-| **M4** | Terminal output of `docker compose up --build` | `evidence/m4-docker-compose.txt`, `evidence/m4-docker-compose-up.png` | Command log & Screenshot | Pending Compose execution | PENDING |
-| **M4** | Screenshot of browser at `http://localhost:3000` | `evidence/m4-browser-localhost-3000.png` | Browser Screenshot | Pending Compose execution | PENDING |
+| **M4** | Backend Dockerfile (non-root) | `backend/Dockerfile` | Dockerfile | UID 10001 (appuser) verified | LOCALLY VERIFIED |
+| **M4** | Frontend multi-stage Dockerfile (non-root) | `frontend/Dockerfile` | Dockerfile | UID 101 (nginx) verified | LOCALLY VERIFIED |
+| **M4** | Terminal output of `docker compose up --build` | `evidence/m4-docker-compose.txt`, `evidence/m4-docker-healthchecks.txt` | Command log & Healthcheck | All 3 containers healthy | LOCALLY VERIFIED |
+| **M4** | Screenshot of browser at `http://localhost:3000` | `evidence/m4-browser-localhost-3000.png` | Browser Screenshot | Verified at http://localhost:3000 | LOCALLY VERIFIED |
 | **M5** | GitHub Actions workflow file | `.github/workflows/ci-cd.yml` | Workflow YAML | In Progress | IMPLEMENTED |
 | **M5** | GitHub Actions run URL showing green pipeline | `evidence/m5-actions-green-url.txt`, `evidence/m5-actions-run.png` | URL & Screenshot | Pending push to remote | PENDING |
 | **M5** | GHCR package page showing SHA-tagged images | `evidence/m5-ghcr-packages.png` | Browser Screenshot | Pending CI push | PENDING |
@@ -38,7 +38,7 @@ This index maps every required submission artifact defined in [GRADING.md](../GR
 | **M8** | `helm list -n <ns>` output | `evidence/m8-helm-list.txt`, `evidence/m8-helm-list.png` | Log & Screenshot | Pending local/EKS deploy | PENDING |
 | **M8** | Browser screenshot of app via Ingress hostname | `evidence/m8-ingress-browser.png` | Browser Screenshot | Pending local/EKS deploy | PENDING |
 | **M9** | Observability Helm values | `monitoring/prometheus-values.yaml` | Helm values | In Progress | IMPLEMENTED |
-| **M9** | `curl http://<backend>/metrics` output | `evidence/m9-curl-metrics.txt`, `evidence/m9-curl-metrics.png` | Log & Screenshot | Pending backend/k8s run | PENDING |
+| **M9** | `curl http://<backend>/metrics` output | `evidence/m9-curl-metrics.txt` | Prometheus metrics log | Verified on localhost:8000 (8.7KB) | LOCALLY VERIFIED |
 | **M9** | Prometheus Targets page showing app UP | `evidence/m9-prometheus-targets.png` | Browser Screenshot | Pending Prometheus run | PENDING |
 | **M9** | Grafana dashboard with populated panel | `evidence/m9-grafana-dashboard.png`, `monitoring/bookflow-dashboard.json` | Screenshot & JSON | Pending Grafana run | PENDING |
 | **M10** | Comprehensive README.md in repository root | `README.md` | Markdown documentation | In Progress | IMPLEMENTED |

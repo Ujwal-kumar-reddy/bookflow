@@ -1,0 +1,33 @@
+﻿============================================================
+BOOKFLOW PHASE 3 LOCAL VERIFICATION - API & ENDPOINT TESTING
+============================================================
+
+[1] Testing Backend Direct Endpoints (http://localhost:8000)
+  GET /health: HTTP 200 -> {'status': 'UP'}
+  GET /ready: HTTP 200 -> {'status': 'READY'}
+  GET /: HTTP 200 -> {'service': 'BookFlow API', 'version': '1.0.0', 'docs': '/docs', 'description': 'Student Library Book-Lending Tracker API'}
+  GET /metrics: HTTP 200 (Length: 8441 bytes)
+
+[2] Testing Frontend Web Server & Proxy (http://localhost:3000)
+  GET / (Frontend SPA): HTTP 200 (HTML length: 913 bytes)
+  GET /health (Nginx Proxy -> Backend): HTTP 200 -> {'status': 'UP'}
+
+[3] Testing CRUD Operations via Reverse Proxy (http://localhost:3000/api/books)
+  POST /api/books (Book 1): HTTP 201 -> ID 1, Title: 'Designing Data-Intensive Applications', Status: AVAILABLE
+  POST /api/books (Book 2): HTTP 201 -> ID 2, Title: 'The DevOps Handbook', Status: AVAILABLE
+  POST /api/books (Book 3): HTTP 201 -> ID 3, Title: 'Site Reliability Engineering', Status: AVAILABLE
+  GET /api/books/stats: HTTP 200 -> {'total': 3, 'available': 3, 'borrowed': 0, 'overdue': 0}
+  POST /api/books/1/checkout: HTTP 200 -> Status: BORROWED, Borrower: Aarav Sharma (STU-2026-001), Due: 2026-10-29
+  GET /api/books/stats (post-checkout): HTTP 200 -> {'total': 3, 'available': 2, 'borrowed': 1, 'overdue': 0}
+  POST /api/books/1/checkout (duplicate): HTTP 400 -> Detail: Book is already checked out to 'Aarav Sharma (STU-2026-001)'
+  POST /api/books/1/return: HTTP 200 -> Status: AVAILABLE, Borrower: None
+  PUT /api/books/2: HTTP 200 -> Updated Title: 'The DevOps Handbook (Second Edition)'
+  DELETE /api/books/3: HTTP 200 -> {'message': "Book 'Site Reliability Engineering' successfully deleted", 'id': 3}
+
+  Final GET /api/books count: 2 books
+    - [2] The DevOps Handbook (Second Edition) by Gene Kim, Jez Humble, Patrick Debois, John Willis (DevOps & Cloud) - AVAILABLE
+    - [1] Designing Data-Intensive Applications by Martin Kleppmann (Data Engineering) - AVAILABLE
+
+============================================================
+ALL API AND BUSINESS LOGIC TESTS PASSED SUCCESSFULLY!
+============================================================

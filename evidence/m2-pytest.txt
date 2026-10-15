@@ -1,4 +1,4 @@
-============================= test session starts =============================
+﻿============================= test session starts =============================
 platform win32 -- Python 3.13.14, pytest-8.3.4, pluggy-1.7.0 -- C:\Users\iamab\Downloads\devops-heros-main (1)\devops-heros-main\Devops-Capstone\backend\.venv\Scripts\python.exe
 cachedir: .pytest_cache
 rootdir: C:\Users\iamab\Downloads\devops-heros-main (1)\devops-heros-main\Devops-Capstone\backend

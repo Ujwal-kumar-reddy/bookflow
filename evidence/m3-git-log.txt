@@ -1,4 +1,4 @@
-25d6f56 docs(progress): update rubric milestone table and audit resolutions across M1-M10
+﻿25d6f56 docs(progress): update rubric milestone table and audit resolutions across M1-M10
 77bb722 docs(terraform): update infrastructure README with cost controls and commands
 b2ada61 chore(config): add dockerignore rules, backend package init, and monitoring values
 27906e5 docs(readme): author comprehensive BookFlow documentation, architecture guide, and adaptations record
