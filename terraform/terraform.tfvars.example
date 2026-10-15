@@ -1,0 +1,9 @@
+# Example Terraform variables for BookFlow AWS Infrastructure
+# Copy this file to terraform.tfvars and customize if needed
+# IMPORTANT: Never commit terraform.tfvars or AWS secrets to version control.
+
+aws_region          = "ap-south-1"
+cluster_name        = "bookflow-eks"
+environment         = "dev"
+cluster_version     = "1.31"
+node_instance_types = ["t3.medium"]
