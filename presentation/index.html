@@ -983,6 +983,19 @@
     if (!isNaN(startSlide) && startSlide >= 1 && startSlide <= totalSlides) {
       showSlide(startSlide);
     }
+
+    if (urlParams.get('clean') === 'true') {
+      document.body.style.padding = '0';
+      document.body.style.margin = '0';
+      document.body.style.background = '#0F172A';
+      const deckEl = document.getElementById('deck');
+      if (deckEl) {
+        deckEl.style.borderRadius = '0';
+        deckEl.style.boxShadow = 'none';
+      }
+      const c = document.querySelector('.controls');
+      if (c) c.style.display = 'none';
+    }
   </script>
 </body>
 </html>

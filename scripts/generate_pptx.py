@@ -449,38 +449,62 @@ def create_presentation():
     add_header(s10, "Cloud Infrastructure", "AWS Cloud Deployment & Amazon EKS Architecture", 10)
 
     # Card 1: VPC
-    add_card(s10, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), title="Amazon VPC & Network Topology", border_color=AMBER)
-    tb10_1 = s10.shapes.add_textbox(Inches(1.0), Inches(2.3), Inches(5.2), Inches(4.3))
+    add_card(s10, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.3), title="Amazon VPC & Network Topology", border_color=AMBER)
+    tb10_1 = s10.shapes.add_textbox(Inches(1.0), Inches(2.3), Inches(5.2), Inches(2.5))
     tf10_1 = tb10_1.text_frame
     tf10_1.word_wrap = True
     vpc_pts = [
         ("AWS Region ap-south-1 (Mumbai)", "High-availability deployment across dual AZs (ap-south-1a, ap-south-1b)."),
         ("Public & Private Subnet Tiering", "Dual public subnets (10.20.101.0/24, 10.20.102.0/24) with ELB tags + dual private subnets with NAT Gateway."),
-        ("Automated Terraform Provisioning", "18 cloud resources provisioned via declarative HCL modules in terraform/ directory."),
-        ("Production Ingress & Security Groups", "Tight network security rules isolating worker nodes while exposing Ingress.")
+        ("Automated Terraform Provisioning", "18 cloud resources provisioned via declarative HCL modules in terraform/ directory.")
     ]
     for idx, (title, desc) in enumerate(vpc_pts):
         p_t = tf10_1.paragraphs[0] if idx == 0 else tf10_1.add_paragraph()
         p_t.text = f"▸ {title}: {desc}"
-        p_t.font.size = Pt(12)
+        p_t.font.size = Pt(11)
         p_t.font.color.rgb = TEXT_MAIN
 
+    # Terminal box 1
+    term1 = s10.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.0), Inches(5.1), Inches(5.2), Inches(1.5))
+    term1.fill.solid()
+    term1.fill.fore_color.rgb = RGBColor(15, 23, 42)
+    term1.line.color.rgb = RGBColor(51, 65, 85)
+    tf_term1 = term1.text_frame
+    tf_term1.word_wrap = True
+    p1 = tf_term1.paragraphs[0]
+    p1.text = "$ terraform apply -auto-approve\n✔ Apply complete! Resources: 18 added, 0 changed, 0 destroyed.\nOutputs: configure_kubectl = \"aws eks update-kubeconfig...\""
+    p1.font.size = Pt(10)
+    p1.font.name = "Consolas"
+    p1.font.color.rgb = RGBColor(16, 185, 129)
+
     # Card 2: EKS
-    add_card(s10, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), title="Managed Amazon EKS Cluster", border_color=AMBER)
-    tb10_2 = s10.shapes.add_textbox(Inches(7.0), Inches(2.3), Inches(5.3), Inches(4.3))
+    add_card(s10, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.3), title="Managed Amazon EKS Cluster", border_color=AMBER)
+    tb10_2 = s10.shapes.add_textbox(Inches(7.0), Inches(2.3), Inches(5.3), Inches(2.5))
     tf10_2 = tb10_2.text_frame
     tf10_2.word_wrap = True
     eks_pts = [
         ("Amazon EKS 1.31 Control Plane", "Fully managed Kubernetes cluster bookflow-eks with public endpoint and IAM RBAC integration."),
         ("Managed Worker Node Group", "Dual t3.medium EC2 worker nodes with auto-repair and dynamic cluster autoscaling (2 to 4 nodes)."),
-        ("AWS EBS CSI Persistent Storage", "AWS EBS CSI driver add-on attached to gp3 StorageClasses for PostgreSQL database durability."),
-        ("Multi-Tier BookFlow Workloads", "Frontend (2 replicas) and backend (2 replicas) running healthy on AWS cloud nodes.")
+        ("AWS EBS CSI Persistent Storage", "AWS EBS CSI driver add-on attached to gp3 StorageClasses for PostgreSQL database durability.")
     ]
     for idx, (title, desc) in enumerate(eks_pts):
         p_t = tf10_2.paragraphs[0] if idx == 0 else tf10_2.add_paragraph()
         p_t.text = f"▸ {title}: {desc}"
-        p_t.font.size = Pt(12)
+        p_t.font.size = Pt(11)
         p_t.font.color.rgb = TEXT_MAIN
+
+    # Terminal box 2
+    term2 = s10.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(7.0), Inches(5.1), Inches(5.3), Inches(1.5))
+    term2.fill.solid()
+    term2.fill.fore_color.rgb = RGBColor(15, 23, 42)
+    term2.line.color.rgb = RGBColor(51, 65, 85)
+    tf_term2 = term2.text_frame
+    tf_term2.word_wrap = True
+    p2 = tf_term2.paragraphs[0]
+    p2.text = "$ kubectl get nodes -o wide\nip-10-20-1-42.ap-south-1.compute  Ready  node  v1.31.0-eks\nip-10-20-2-88.ap-south-1.compute  Ready  node  v1.31.0-eks"
+    p2.font.size = Pt(10)
+    p2.font.name = "Consolas"
+    p2.font.color.rgb = RGBColor(16, 185, 129)
 
     # ==========================================================
     # SLIDE 11: Capstone Summary & Production Takeaways (2x2 Grid)
