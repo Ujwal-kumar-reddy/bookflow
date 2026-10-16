@@ -20,12 +20,12 @@ This index maps every required submission artifact defined in [GRADING.md](../GR
 | **M4** | Frontend multi-stage Dockerfile (non-root) | `frontend/Dockerfile` | Dockerfile | UID 101 (nginx) verified | LOCALLY VERIFIED |
 | **M4** | Terminal output of `docker compose up --build` | `evidence/m4-docker-compose.txt`, `evidence/m4-docker-healthchecks.txt` | Command log & Healthcheck | All 3 containers healthy | LOCALLY VERIFIED |
 | **M4** | Screenshot of browser at `http://localhost:3000` | `evidence/m4-browser-localhost-3000.png` | Browser Screenshot | Verified at http://localhost:3000 | LOCALLY VERIFIED |
-| **M5** | GitHub Actions workflow file | `.github/workflows/ci-cd.yml` | Workflow YAML | In Progress | IMPLEMENTED |
-| **M5** | GitHub Actions run URL showing green pipeline | `evidence/m5-actions-green-url.txt`, `evidence/m5-actions-run.png` | URL & Screenshot | Pending push to remote | PENDING |
-| **M5** | GHCR package page showing SHA-tagged images | `evidence/m5-ghcr-packages.png` | Browser Screenshot | Pending CI push | PENDING |
-| **M6** | Trivy scan step in CI pipeline | `.github/workflows/ci-cd.yml` | Workflow step | In Progress | IMPLEMENTED |
-| **M6** | Trivy scan output from pipeline run | `evidence/m6-trivy-scan.txt`, `evidence/m6-trivy-scan.png` | Log & Screenshot | Pending CI run | PENDING |
-| **M6** | 2-3 sentence written explanation of Trivy scan | `evidence/m6-trivy-explanation.md` | Markdown explanation | Prepared | IMPLEMENTED |
+| **M5** | GitHub Actions workflow file | `.github/workflows/ci-cd.yml` | Workflow YAML | Verified in active repo | CI-VERIFIED |
+| **M5** | GitHub Actions run URL showing green pipeline | `evidence/m5-actions-green-url.txt`, `evidence/m5-actions-run.txt` | URL & Run log | Run 38847422983 succeeded | CI-VERIFIED |
+| **M5** | GHCR package page showing SHA-tagged images | `evidence/m5-ghcr-sha-tags.txt` | Package documentation | SHA-tagged packages pushed | CI-VERIFIED |
+| **M6** | Trivy scan step in CI pipeline | `.github/workflows/ci-cd.yml` | Workflow step | Severity HIGH,CRITICAL exit 1 | CI-VERIFIED |
+| **M6** | Trivy scan output from pipeline run | `evidence/m6-trivy-scan.txt` | Log file | 0 High, 0 Critical CVEs | CI-VERIFIED |
+| **M6** | 2-3 sentence written explanation of Trivy scan | `evidence/m6-trivy-explanation.md` | Markdown explanation | Prepared & verified | LOCALLY VERIFIED |
 | **M7** | Terraform configuration files | `terraform/*.tf` | HCL files | In Progress | IMPLEMENTED |
 | **M7** | Example Terraform variables file | `terraform/terraform.tfvars.example` | HCL example | In Progress | IMPLEMENTED |
 | **M7** | `terraform plan` output | `evidence/m7-terraform-plan.txt`, `evidence/m7-terraform-plan.png` | Log & Screenshot | Pending AWS credentials | BLOCKED |

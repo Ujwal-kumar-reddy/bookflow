@@ -1,0 +1,13 @@
+# GHCR Published Packages (Tagged with Git Commit SHA)
+
+Workflow Run: https://github.com/Ujwal-kumar-reddy/bookflow/actions/runs/38847422983
+Commit SHA: eff2520cbf801e2aa0fa8ba9724c489bb1552658
+
+Published Images:
+- ghcr.io/ujwal-kumar-reddy/bookflow-backend:eff2520cbf801e2aa0fa8ba9724c489bb1552658
+- ghcr.io/ujwal-kumar-reddy/bookflow-frontend:eff2520cbf801e2aa0fa8ba9724c489bb1552658
+
+Registry: GitHub Container Registry (ghcr.io)
+Repository Owner: ujwal-kumar-reddy
+Tag Strategy: Full Git commit SHA (${{ github.sha }}), avoiding mutable 'latest' tags for immutability.
+Security Gate: Passed Aqua Security Trivy vulnerability scan (0 HIGH, 0 CRITICAL CVEs).

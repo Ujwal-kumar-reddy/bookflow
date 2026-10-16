@@ -1,7 +1,7 @@
 # Capstone Progress Tracker — BookFlow (Session 21)
 
 **Target Deadline:** 16 October 2026, 11:59 PM IST  
-**Current Status:** Phase 3 Local Verification COMPLETED (Docker Compose healthy, PostgreSQL persistence verified across restart/recreate, REST CRUD verified, frontend dashboard active at localhost:3000).  
+**Current Status:** Phase 4 CI/CD & DevSecOps COMPLETED (GitHub Actions Run 38847422983 Green, Pytest gate 15/15 passed, Node 22 build passed, 0 CVE Trivy scan passed, GHCR SHA-tagged packages published).  
 **Application Domain:** BookFlow — Student Library Book-Lending Tracker  
 **Target Architecture:** FastAPI Backend (8000), React/Vite Frontend (3000/8080), PostgreSQL (5433 host / 5432 container), Docker Compose, GitHub Actions, Trivy, GHCR, Terraform (AWS VPC + EKS ap-south-1), Kubernetes + Helm, Prometheus + Grafana.
 
@@ -27,16 +27,16 @@
 | **M4** | `frontend/Dockerfile` multi-stage build (Node build + Nginx runtime) | 3 | `frontend/Dockerfile` | `docker compose up -d --build` | `evidence/m4-docker-compose.txt` | Completed | LOCALLY VERIFIED |
 | **M4** | Non-root user in both Dockerfiles (10001 backend, 101 frontend) | 2 | `backend/Dockerfile`, `frontend/Dockerfile` | `id` in running containers | `evidence/m4-docker-nonroot.txt` | Completed | LOCALLY VERIFIED |
 | **M4** | `docker compose up --build` starts frontend, backend, postgres | 3 | `docker-compose.yml` | `docker compose up -d --build` (all healthy) | `evidence/m4-docker-compose.txt`, `evidence/m4-browser-localhost-3000.png` | Completed | LOCALLY VERIFIED |
-| **M5** | `.github/workflows/ci-cd.yml` present | 1 | `.github/workflows/ci-cd.yml` | Workflow syntax validation | `.github/workflows/ci-cd.yml` | Completed | IMPLEMENTED |
-| **M5** | Pipeline triggers on push to `main` | 1 | `.github/workflows/ci-cd.yml` | Push event to GitHub | `evidence/m5-actions-green-url.txt` | Awaiting remote & push approval | PENDING |
-| **M5** | `pytest` runs as pipeline quality gate | 3 | `.github/workflows/ci-cd.yml` | Actions job `test` | `evidence/m5-actions-test-step.txt` | Awaiting remote & push approval | PENDING |
-| **M5** | Frontend builds in CI pipeline | 2 | `.github/workflows/ci-cd.yml` | Actions job `test` (`npm ci && npm run build`) | `evidence/m5-actions-frontend-build.txt` | Awaiting remote & push approval | PENDING |
-| **M5** | Docker images built for backend & frontend | 3 | `.github/workflows/ci-cd.yml` | Actions job `build-scan-push` | `evidence/m5-actions-docker-build.txt` | Awaiting remote & push approval | PENDING |
-| **M5** | Images pushed to GHCR | 3 | `.github/workflows/ci-cd.yml` | Actions job `build-scan-push` | `evidence/m5-ghcr-packages.png` | Awaiting remote & push approval | PENDING |
-| **M5** | Image tags use Git commit SHA (not latest) | 2 | `.github/workflows/ci-cd.yml` | GHCR package tag verification | `evidence/m5-ghcr-sha-tags.txt` | Awaiting remote & push approval | PENDING |
-| **M6** | Trivy scan runs on backend & frontend images | 3 | `.github/workflows/ci-cd.yml` | Actions Trivy step | `evidence/m6-trivy-scan.txt` | Awaiting remote & push approval | PENDING |
-| **M6** | Pipeline fails on HIGH or CRITICAL CVEs (exit-code 1) | 1 | `.github/workflows/ci-cd.yml` | Trivy config inspection | `.github/workflows/ci-cd.yml` | Completed | IMPLEMENTED |
-| **M6** | Written explanation of CVE findings or clean scan | 1 | `evidence/m6-trivy-explanation.md` | Written documentation | `evidence/m6-trivy-explanation.md` | Completed | IMPLEMENTED |
+| **M5** | `.github/workflows/ci-cd.yml` present | 1 | `.github/workflows/ci-cd.yml` | Workflow syntax validation | `.github/workflows/ci-cd.yml` | Completed | CI-VERIFIED |
+| **M5** | Pipeline triggers on push to `main` | 1 | `.github/workflows/ci-cd.yml` | GitHub Actions run 38847422983 | `evidence/m5-actions-green-url.txt` | Completed | CI-VERIFIED |
+| **M5** | `pytest` runs as pipeline quality gate | 3 | `.github/workflows/ci-cd.yml` | Actions job `test` (15/15 passed) | `evidence/m5-actions-run.txt` | Completed | CI-VERIFIED |
+| **M5** | Frontend builds in CI pipeline | 2 | `.github/workflows/ci-cd.yml` | Actions job `test` (`npm ci && npm run build`) | `evidence/m5-actions-run.txt` | Completed | CI-VERIFIED |
+| **M5** | Docker images built for backend & frontend | 3 | `.github/workflows/ci-cd.yml` | Actions job `build-scan-push` | `evidence/m5-actions-run.txt` | Completed | CI-VERIFIED |
+| **M5** | Images pushed to GHCR | 3 | `.github/workflows/ci-cd.yml` | Actions job `build-scan-push` | `evidence/m5-ghcr-sha-tags.txt` | Completed | CI-VERIFIED |
+| **M5** | Image tags use Git commit SHA (not latest) | 2 | `.github/workflows/ci-cd.yml` | GHCR package tag verification | `evidence/m5-ghcr-sha-tags.txt` | Completed | CI-VERIFIED |
+| **M6** | Trivy scan runs on backend & frontend images | 3 | `.github/workflows/ci-cd.yml` | Actions Trivy step | `evidence/m6-trivy-scan.txt` | Completed | CI-VERIFIED |
+| **M6** | Pipeline fails on HIGH or CRITICAL CVEs (exit-code 1) | 1 | `.github/workflows/ci-cd.yml` | Enforced in CI (exit-code 1) | `evidence/m5-actions-run.txt` | Completed | CI-VERIFIED |
+| **M6** | Written explanation of CVE findings or clean scan | 1 | `evidence/m6-trivy-explanation.md` | Written documentation | `evidence/m6-trivy-explanation.md` | Completed | LOCALLY VERIFIED |
 | **M7** | Valid HCL files in `terraform/` | 2 | `terraform/*.tf` | `terraform fmt -check`, `terraform validate` | `evidence/m7-terraform-validate.txt` | Completed | LOCALLY VERIFIED |
 | **M7** | `terraform init` completes without errors | 1 | `terraform/` | `terraform init` (exited 0) | `.terraform/` | Completed | LOCALLY VERIFIED |
 | **M7** | `terraform plan` produces non-empty error-free plan | 2 | `terraform/` | `terraform plan` | `evidence/m7-terraform-plan.txt` | Blocked on AWS credentials | BLOCKED |
