@@ -1,0 +1,6 @@
+﻿NAME                                 READY   STATUS    RESTARTS        AGE     IP          NODE             NOMINATED NODE   READINESS GATES
+bookflow-backend-77645fc779-hs85s    1/1     Running   1 (2m43s ago)   2m57s   10.1.1.37   docker-desktop   <none>           <none>
+bookflow-backend-77645fc779-rd52p    1/1     Running   1 (2m43s ago)   2m57s   10.1.1.35   docker-desktop   <none>           <none>
+bookflow-frontend-5968969b9c-2m62n   1/1     Running   0               2m57s   10.1.1.39   docker-desktop   <none>           <none>
+bookflow-frontend-5968969b9c-gjw7n   1/1     Running   0               2m57s   10.1.1.38   docker-desktop   <none>           <none>
+bookflow-postgres-bcfb4d9d6-mxsxw    1/1     Running   0               23s     10.1.1.40   docker-desktop   <none>           <none>

@@ -1,0 +1,51 @@
+﻿=================================================================
+BOOKFLOW LOCAL KUBERNETES VERIFICATION (DOCKER DESKTOP)
+=================================================================
+
+[1] Checking Pods and Replica Counts in 'bookflow' namespace...
+NAME                                 READY   STATUS    RESTARTS        AGE     IP          NODE             NOMINATED NODE   READINESS GATES
+bookflow-backend-77645fc779-hs85s    1/1     Running   1 (2m18s ago)   2m32s   10.1.1.37   docker-desktop   <none>           <none>
+bookflow-backend-77645fc779-rd52p    1/1     Running   1 (2m18s ago)   2m32s   10.1.1.35   docker-desktop   <none>           <none>
+bookflow-frontend-5968969b9c-2m62n   1/1     Running   0               2m32s   10.1.1.39   docker-desktop   <none>           <none>
+bookflow-frontend-5968969b9c-gjw7n   1/1     Running   0               2m32s   10.1.1.38   docker-desktop   <none>           <none>
+bookflow-postgres-bcfb4d9d6-kxq46    1/1     Running   0               2m32s   10.1.1.36   docker-desktop   <none>           <none>
+  - Deployment 'bookflow-backend': 2/2 replicas ready
+  - Deployment 'bookflow-frontend': 2/2 replicas ready
+  - Deployment 'bookflow-postgres': 1/1 replicas ready
+
+[2] Checking Services and Ingress...
+NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/backend             ClusterIP   10.100.246.152   <none>        8000/TCP   2m34s
+service/bookflow-backend    ClusterIP   10.101.228.44    <none>        8000/TCP   2m34s
+service/bookflow-frontend   ClusterIP   10.106.130.171   <none>        80/TCP     2m34s
+service/bookflow-postgres   ClusterIP   10.98.74.182     <none>        5432/TCP   2m34s
+
+NAME                                 CLASS   HOSTS            ADDRESS     PORTS   AGE
+ingress.networking.k8s.io/bookflow   nginx   bookflow.local   localhost   80      2m33s
+
+NAME                                                   REFERENCE                     TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/bookflow-backend   Deployment/bookflow-backend   cpu: 4%/60%   2         6         2          2m33s
+
+NAME                                           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/bookflow-postgres-data   Bound    pvc-3eda2232-22fa-4ad0-a339-52c921906a5d   5Gi        RWO            hostpath       <unset>                 2m34s
+
+[3] Testing Ingress Routing via http://localhost:8088...
+  GET / (Frontend React SPA): HTTP 200 -> Contains '<div id="root">': True
+  GET /health (Liveness via Frontend Proxy): HTTP 200 -> {'status': 'UP'}
+
+[4] Executing CRUD & Lending Operations via Ingress (/api/books)...
+  POST /api/books (Book 1): HTTP 201 -> ID 1: 'Kubernetes in Action'
+  POST /api/books (Book 2): HTTP 201 -> ID 2: 'Site Reliability Engineering'
+  POST /api/books (Book 3): HTTP 201 -> ID 3: 'Database Internals'
+  POST /api/books/1/checkout: HTTP 200 -> Status: BORROWED, Borrower: Priya Patel (STU-2026-002)
+  GET /api/books/stats: HTTP 200 -> Total=3, Available=2, Borrowed=1
+
+[5] Testing PostgreSQL Data Persistence Across Pod Deletion...
+  Deleting active PostgreSQL pod 'bookflow-postgres-bcfb4d9d6-kxq46'...
+  Waiting for PostgreSQL pod to be recreated and become Ready...
+  GET /api/books (post-postgres-deletion): HTTP 200 -> Found 3 books
+  -> PASSED: All books persisted on PVC across PostgreSQL pod deletion!
+
+=================================================================
+LOCAL KUBERNETES VERIFICATION PASSED SUCCESSFULLY!
+=================================================================

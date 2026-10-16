@@ -1,0 +1,14 @@
+﻿NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/backend             ClusterIP   10.100.246.152   <none>        8000/TCP   2m58s
+service/bookflow-backend    ClusterIP   10.101.228.44    <none>        8000/TCP   2m58s
+service/bookflow-frontend   ClusterIP   10.106.130.171   <none>        80/TCP     2m58s
+service/bookflow-postgres   ClusterIP   10.98.74.182     <none>        5432/TCP   2m58s
+
+NAME                                 CLASS   HOSTS            ADDRESS     PORTS   AGE
+ingress.networking.k8s.io/bookflow   nginx   bookflow.local   localhost   80      2m57s
+
+NAME                                                   REFERENCE                     TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/bookflow-backend   Deployment/bookflow-backend   cpu: 4%/60%   2         6         2          2m57s
+
+NAME                                           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/bookflow-postgres-data   Bound    pvc-3eda2232-22fa-4ad0-a339-52c921906a5d   5Gi        RWO            hostpath       <unset>                 2m58s

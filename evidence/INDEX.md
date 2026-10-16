@@ -31,12 +31,12 @@ This index maps every required submission artifact defined in [GRADING.md](../GR
 | **M7** | `terraform plan` output | `evidence/m7-terraform-plan.txt`, `evidence/m7-terraform-plan.png` | Log & Screenshot | Pending AWS credentials | BLOCKED |
 | **M7** | AWS Console screenshot: VPC & EKS | `evidence/m7-aws-console-vpc-eks.png` | Screenshot | Pending AWS apply approval | BLOCKED |
 | **M7** | `terraform destroy` completion output | `evidence/m7-terraform-destroy.txt`, `evidence/m7-terraform-destroy.png` | Log & Screenshot | Pending AWS teardown | BLOCKED |
-| **M8** | Namespace manifest | `k8s/namespace.yaml` | K8s YAML | In Progress | IMPLEMENTED |
-| **M8** | Helm chart directory | `helm/bookflow/` | Helm chart | In Progress | IMPLEMENTED |
-| **M8** | `kubectl get pods -n <ns>` running pods output | `evidence/m8-kubectl-pods.txt`, `evidence/m8-kubectl-pods.png` | Log & Screenshot | Pending local/EKS deploy | PENDING |
-| **M8** | `kubectl get svc -n <ns>` output | `evidence/m8-kubectl-svc.txt`, `evidence/m8-kubectl-svc.png` | Log & Screenshot | Pending local/EKS deploy | PENDING |
-| **M8** | `helm list -n <ns>` output | `evidence/m8-helm-list.txt`, `evidence/m8-helm-list.png` | Log & Screenshot | Pending local/EKS deploy | PENDING |
-| **M8** | Browser screenshot of app via Ingress hostname | `evidence/m8-ingress-browser.png` | Browser Screenshot | Pending local/EKS deploy | PENDING |
+| **M8** | Namespace manifest | `k8s/namespace.yaml` | K8s YAML | Applied to Docker Desktop | LOCALLY VERIFIED |
+| **M8** | Helm chart directory | `helm/bookflow/`, `evidence/m8-helm-lint.txt`, `evidence/m8-helm-template.txt` | Helm chart & templates | Linted (0 errors) & rendered | LOCALLY VERIFIED |
+| **M8** | `kubectl get pods -n <ns>` running pods output | `evidence/m8-kubectl-pods.txt`, `evidence/m8-k8s-local-verification.txt` | Log file | All 5 pods Running (2 backend, 2 frontend) | LOCALLY VERIFIED |
+| **M8** | `kubectl get svc -n <ns>` output | `evidence/m8-kubectl-svc.txt` | Log file | Services, Ingress, HPA, PVC verified | LOCALLY VERIFIED |
+| **M8** | `helm list -n <ns>` output | `evidence/m8-helm-list.txt` | Log file | Revision 1 deployed in bookflow ns | LOCALLY VERIFIED |
+| **M8** | Browser screenshot of app via Ingress hostname | `evidence/m8-ingress-browser.png` | Browser Screenshot | Verified via Ingress at localhost:8088 | LOCALLY VERIFIED |
 | **M9** | Observability Helm values | `monitoring/prometheus-values.yaml` | Helm values | In Progress | IMPLEMENTED |
 | **M9** | `curl http://<backend>/metrics` output | `evidence/m9-curl-metrics.txt` | Prometheus metrics log | Verified on localhost:8000 (8.7KB) | LOCALLY VERIFIED |
 | **M9** | Prometheus Targets page showing app UP | `evidence/m9-prometheus-targets.png` | Browser Screenshot | Pending Prometheus run | PENDING |

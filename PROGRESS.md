@@ -44,13 +44,13 @@
 | **M7** | EKS cluster with managed worker node group provisioned | 4 | `terraform/main.tf` | AWS Console / `kubectl get nodes` | `evidence/m7-aws-console-vpc-eks.png` | Blocked on user apply approval | BLOCKED |
 | **M7** | `terraform destroy` tears down resources cleanly | 2 | `terraform/` | `terraform destroy` output | `evidence/m7-terraform-destroy.txt` | Blocked on post-deploy | BLOCKED |
 | **M7** | `terraform.tfvars.example` present (no secrets) | 1 | `terraform/terraform.tfvars.example` | File check | `terraform/terraform.tfvars.example` | Completed | IMPLEMENTED |
-| **M8** | `k8s/namespace.yaml` exists and applies cleanly | 1 | `k8s/namespace.yaml` | `kubectl apply -f k8s/namespace.yaml` | `k8s/namespace.yaml` | Completed | IMPLEMENTED |
+| **M8** | `k8s/namespace.yaml` exists and applies cleanly | 1 | `k8s/namespace.yaml` | `kubectl apply -f k8s/namespace.yaml` | `k8s/namespace.yaml` | Completed | LOCALLY VERIFIED |
 | **M8** | Helm chart in `helm/bookflow/` (Chart.yaml, values, templates) | 3 | `helm/bookflow/` | `helm lint ./helm/bookflow` (0 failed) | `evidence/m8-helm-lint.txt` | Completed | LOCALLY VERIFIED |
-| **M8** | `helm upgrade --install` deploys without errors | 3 | `helm/bookflow/` | `helm template` passed | `evidence/m8-helm-template-prod.yaml` | Completed | LOCALLY VERIFIED |
-| **M8** | Backend & Frontend Deployments run >=2 replicas each | 2 | `helm/bookflow/templates/*-deployment.yaml` | Helm template verification | `evidence/m8-helm-template-prod.yaml` | Completed | LOCALLY VERIFIED |
-| **M8** | ClusterIP Services expose backend and frontend | 2 | `helm/bookflow/templates/*-service.yaml` | Helm template verification | `evidence/m8-helm-template-prod.yaml` | Completed | LOCALLY VERIFIED |
-| **M8** | Ingress routes `/` -> frontend and `/api` -> backend | 2 | `helm/bookflow/templates/ingress.yaml` | Helm template verification | `evidence/m8-helm-template-dev.yaml` | Completed | LOCALLY VERIFIED |
-| **M8** | `kubectl get pods -n bookflow` shows all pods Running | 2 | Kubernetes cluster | `kubectl get pods -n bookflow` | `evidence/m8-kubectl-pods.txt` | Pending k8s cluster | PENDING |
+| **M8** | `helm upgrade --install` deploys without errors | 3 | `helm/bookflow/` | `helm upgrade --install` on Docker Desktop | `evidence/m8-helm-list.txt` | Completed | LOCALLY VERIFIED |
+| **M8** | Backend & Frontend Deployments run >=2 replicas each | 2 | `helm/bookflow/templates/*-deployment.yaml` | `kubectl get deployments -n bookflow` | `evidence/m8-kubectl-pods.txt` | Completed | LOCALLY VERIFIED |
+| **M8** | ClusterIP Services expose backend and frontend | 2 | `helm/bookflow/templates/*-service.yaml` | `kubectl get svc -n bookflow` | `evidence/m8-kubectl-svc.txt` | Completed | LOCALLY VERIFIED |
+| **M8** | Ingress routes `/` -> frontend and `/api` -> backend | 2 | `helm/bookflow/templates/ingress.yaml` | Verified via Ingress at localhost:8088 | `evidence/m8-ingress-browser.png` | Completed | LOCALLY VERIFIED |
+| **M8** | `kubectl get pods -n bookflow` shows all pods Running | 2 | Kubernetes cluster | `kubectl get pods -n bookflow` (5/5 running) | `evidence/m8-kubectl-pods.txt` | Completed | LOCALLY VERIFIED |
 | **M9** | `/metrics` endpoint returns Prometheus metrics | 2 | `backend/app/main.py` | `pytest test_metrics` passed | `evidence/m2-pytest.txt` | Completed | LOCALLY VERIFIED |
 | **M9** | Prometheus installed and scrapes BookFlow backend | 3 | `monitoring/prometheus-values.yaml` | Prometheus UI Targets screen | `evidence/m9-prometheus-targets.png` | Pending Prometheus deploy | PENDING |
 | **M9** | Grafana installed and accessible | 2 | Helm / port-forward | Grafana login screen | `evidence/m9-grafana-login.png` | Pending Grafana deploy | PENDING |
