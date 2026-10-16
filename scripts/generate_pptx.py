@@ -450,7 +450,7 @@ def create_presentation():
 
     summary_boxes = [
         ("100% Verified Local Stack", "Docker Desktop Kubernetes running 5/5 healthy pods, NGINX Ingress on port 8088, and persistent PostgreSQL storage surviving pod restarts."),
-        ("Zero Secret Leaks & $0 Cloud Costs", "Automated pre-push scanner passed with 0 secret patterns; Terraform IaC statically validated without unexpected AWS charges ($0.00 spent)."),
+        ("Security First & Cloud Infrastructure", "Non-root container execution (UID 10001 / 101), automated pre-push secret audit passed with 0 leaked patterns, and modular Terraform IaC architected for high-availability cloud deployment."),
         ("Production CI/CD Automation", "GitHub Actions pipeline with 16/16 Pytest blocking gate, Trivy CVE security checks (0 CVEs), and immutable GHCR image tags."),
         ("Observability & 37 Evidence Artifacts", "Prometheus metrics scraping with target status UP, live 4-panel Grafana dashboard, HPA dynamic scaling, and 37 comprehensive evidence files.")
     ]

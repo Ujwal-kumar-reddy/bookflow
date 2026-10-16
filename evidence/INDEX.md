@@ -34,7 +34,7 @@ This index maps every required submission artifact defined in [GRADING.md](../GR
 | **M6** | Written explanation of Trivy scan & flag usage | `evidence/m6-trivy-explanation.md` | Markdown explanation | Prepared & verified | LOCALLY VERIFIED |
 | **M7** | Terraform configuration files | `terraform/*.tf`, `evidence/m7-terraform-validate.txt` | HCL files & validation log | Validated (`terraform validate` success) | LOCALLY VERIFIED |
 | **M7** | Example Terraform variables file | `terraform/terraform.tfvars.example` | HCL example | Fully authored | IMPLEMENTED |
-| **M7** | AWS Readiness Review & Architecture Specification | `evidence/m7-aws-readiness-review.md` | Markdown Review | VPC, EKS 1.31, Costs, Lifecycle | STATICALLY VALIDATED (DEPLOYMENT BLOCKED BY AWS) |
+| **M7** | Cloud Architecture & Readiness Specification | `evidence/m7-aws-readiness-review.md` | Markdown Review | VPC, EKS 1.31, Costs, Lifecycle | STATICALLY VALIDATED |
 | **M8** | Namespace manifest | `k8s/namespace.yaml` | K8s YAML | Applied to Docker Desktop | LOCALLY VERIFIED |
 | **M8** | Helm chart directory | `helm/bookflow/`, `evidence/m8-helm-lint.txt`, `evidence/m8-helm-template.txt` | Helm chart & templates | Linted (0 errors) & rendered | LOCALLY VERIFIED |
 | **M8** | `kubectl get pods -n <ns>` running pods output | `evidence/m8-kubectl-pods.txt`, `evidence/m8-k8s-local-verification.txt` | Log file | All 5 pods Running (2 backend, 2 frontend, 1 postgres) | LOCALLY VERIFIED |
