@@ -250,49 +250,33 @@ def create_presentation():
     # ==========================================================
     s5 = prs.slides.add_slide(blank_slide_layout)
     add_background(s5)
-    add_header(s5, "Security & Verification", "Quality Assurance & Defense-in-Depth", 5)
+    add_header(s5, "Security & Verification", "Quality Assurance & Student Loan Workflow", 5)
 
-    qa_cards = [
-        ("16/16 Pytest Test Suite", [
-            "Comprehensive test coverage for all CRUD routes",
-            "Health & Ready endpoints (/health, /ready)",
-            "Prometheus metrics schema validation",
-            "Checkout & return lending rule enforcement",
-            "Execution time: 1.32s (100% passing)"
-        ]),
-        ("Isolated Test Database", [
-            "Temporary in-memory SQLite with StaticPool",
-            "Zero test pollution on production database",
-            "Automatic schema creation and teardown",
-            "Independent fixtures via conftest.py"
-        ]),
-        ("Non-Root Container Enforcement", [
-            "Backend: UID 10001 (appuser) runtime",
-            "Frontend: UID 101 (nginx unprivileged)",
-            "Drop root privileges in production containers",
-            "Verified via runtime 'id' command inspection"
-        ]),
-        ("Pre-Push Secret Hygiene", [
-            "Custom automated scanner scripts/scan_secrets.py",
-            "Audits tracked files and entire git commit history",
-            "Prevents AWS keys, passwords, and tokens from leaking",
-            "Strict .gitignore excludes .env, .venv, caches"
-        ])
+    add_card(s5, Inches(0.8), Inches(1.6), Inches(4.5), Inches(5.2), title="Automated Verification & Controls")
+    tb5 = s5.shapes.add_textbox(Inches(1.0), Inches(2.3), Inches(4.1), Inches(4.3))
+    tf5 = tb5.text_frame
+    tf5.word_wrap = True
+    qa_points = [
+        ("16/16 Pytest Test Suite", "Full coverage for CRUD, health, ready, and metrics routes in 1.32s."),
+        ("Zero Database Pollution", "In-memory SQLite with StaticPool ensures 0 leftover test records."),
+        ("Non-Root Security", "Backend runs as UID 10001 (appuser); frontend runs as UID 101 (nginx)."),
+        ("Interactive Checkout Modal", "Validates student roll IDs and dynamic loan period calculations.")
     ]
-    for idx, (title, points) in enumerate(qa_cards):
-        col = idx % 2
-        row = idx // 2
-        x = Inches(0.8 + col * 5.9)
-        y = Inches(1.6 + row * 2.7)
-        add_card(s5, x, y, Inches(5.7), Inches(2.5), title=title)
-        tb = s5.shapes.add_textbox(x + Inches(0.2), y + Inches(0.6), Inches(5.3), Inches(1.8))
-        tf = tb.text_frame
-        tf.word_wrap = True
-        for p_idx, pt in enumerate(points):
-            p = tf.paragraphs[0] if p_idx == 0 else tf.add_paragraph()
-            p.text = f"✔ {pt}"
-            p.font.size = Pt(11)
-            p.font.color.rgb = TEXT_MAIN
+    for idx, (title, desc) in enumerate(qa_points):
+        p_t = tf5.paragraphs[0] if idx == 0 else tf5.add_paragraph()
+        p_t.text = f"✔ {title}"
+        p_t.font.bold = True
+        p_t.font.size = Pt(13)
+        p_t.font.color.rgb = EMERALD
+        p_d = tf5.add_paragraph()
+        p_d.text = f"   {desc}"
+        p_d.font.size = Pt(11)
+        p_d.font.color.rgb = TEXT_MUTED
+
+    add_card(s5, Inches(5.5), Inches(1.6), Inches(7.0), Inches(5.2))
+    img5_path = r"evidence\m1-loan-modal.png"
+    if os.path.exists(img5_path):
+        s5.shapes.add_picture(img5_path, Inches(5.7), Inches(1.85), Inches(6.6), Inches(4.7))
 
     # ==========================================================
     # SLIDE 6: CI/CD Pipeline with GitHub Actions
@@ -302,23 +286,23 @@ def create_presentation():
     add_header(s6, "Automated Pipeline", "Continuous Integration & Delivery Pipeline", 6)
 
     pipeline_stages = [
-        ("Stage 1: Automated Quality Gate", "Trigger: Push to 'main'", [
+        ("Stage 1: Test Gate", "Trigger: Push to 'main'", [
             "Checkout repository code",
             "Set up Python 3.11 environment",
             "Execute 16/16 Pytest tests (blocking)",
             "Set up Node.js 20 environment",
-            "Run npm ci && npm run build (production)"
+            "Run npm ci && npm run build (passed)"
         ]),
         ("Stage 2: Vulnerability Gate", "Security First", [
             "Build Docker images for backend & frontend",
             "Run Aquasecurity Trivy CVE scanner",
             "Strict gate: exit-code 1 on HIGH or CRITICAL",
             "Scan Result: 0 High, 0 Critical vulnerabilities",
-            "Guarantees clean container security posture"
+            "Guarantees clean container posture"
         ]),
-        ("Stage 3: GHCR Image Publishing", "Immutable Artifacts", [
+        ("Stage 3: GHCR Publishing", "Immutable Artifacts", [
             "Authenticate with GitHub Container Registry",
-            "Tag images with exact Git commit SHA (not 'latest')",
+            "Tag images with exact Git commit SHA",
             "Push backend: <sha> to GHCR",
             "Push frontend: <sha> to GHCR",
             "Deterministic image deployment traceability"
@@ -333,14 +317,14 @@ def create_presentation():
 
         p_sub = tf.paragraphs[0]
         p_sub.text = sub.upper()
-        p_sub.font.size = Pt(10)
+        p_sub.font.size = Pt(11)
         p_sub.font.bold = True
         p_sub.font.color.rgb = TEXT_MUTED
 
         for itm in items:
             p = tf.add_paragraph()
             p.text = f"▸ {itm}"
-            p.font.size = Pt(11)
+            p.font.size = Pt(12)
             p.font.color.rgb = TEXT_MAIN
 
     # ==========================================================
@@ -356,28 +340,28 @@ def create_presentation():
     tf7 = tb7.text_frame
     tf7.word_wrap = True
     k8s_points = [
-        ("Custom Helm Chart", "Modular chart in helm/bookflow with linted values (0 errors) and parameterized templates."),
-        ("High Availability Pods", "2 frontend replicas + 2 backend replicas + 1 PostgreSQL stateful pod (5/5 healthy)."),
-        ("Traffic Ingress Controller", "NGINX Ingress routing root (/) to frontend and (/api, /metrics) to backend services."),
-        ("Self-Healing Probes", "Liveness and readiness HTTP probes preventing traffic to unready pods."),
-        ("Persistent Storage", "Kubernetes PVC mount ensuring PostgreSQL data durability across pod restarts.")
+        ("Custom Helm Chart", "Modular chart in helm/bookflow with linted values (0 errors)."),
+        ("High Availability (5/5)", "2 backend replicas + 2 frontend replicas + 1 PostgreSQL stateful pod."),
+        ("Traffic Ingress Controller", "NGINX Ingress routing root (/) to frontend and (/api, /metrics) to backend."),
+        ("Probes & Self-Healing", "Liveness and readiness HTTP probes preventing traffic to unready pods."),
+        ("Persistent Storage", "Kubernetes PVC mount ensuring PostgreSQL data durability across restarts.")
     ]
     for idx, (title, desc) in enumerate(k8s_points):
         p_t = tf7.paragraphs[0] if idx == 0 else tf7.add_paragraph()
         p_t.text = f"• {title}"
         p_t.font.bold = True
-        p_t.font.size = Pt(12)
+        p_t.font.size = Pt(13)
         p_t.font.color.rgb = TEXT_MAIN
         p_d = tf7.add_paragraph()
         p_d.text = f"   {desc}"
-        p_d.font.size = Pt(10)
+        p_d.font.size = Pt(11)
         p_d.font.color.rgb = TEXT_MUTED
 
     # Right: Embedded Screenshot
     add_card(s7, Inches(5.5), Inches(1.6), Inches(7.0), Inches(5.2))
     img7_path = r"evidence\m8-ingress-browser.png"
     if os.path.exists(img7_path):
-        s7.shapes.add_picture(img7_path, Inches(5.6), Inches(1.8), Inches(6.8), Inches(4.8))
+        s7.shapes.add_picture(img7_path, Inches(5.7), Inches(1.85), Inches(6.6), Inches(4.7))
 
     # ==========================================================
     # SLIDE 8: Kubernetes Troubleshooting Labs
@@ -392,16 +376,16 @@ def create_presentation():
     tf8_1 = tb8_1.text_frame
     tf8_1.word_wrap = True
     lab1_pts = [
-        ("Fault Injected", "Deployed broken manifest with non-existent tag bookflow-backend:v999.999-broken."),
-        ("Observed Symptoms", "Pod entered ErrImagePull and escalated to ImagePullBackOff with 0/1 ready state."),
-        ("Diagnosis Protocol", "Executed kubectl describe pod to inspect Kubelet events, identifying ErrImagePull."),
+        ("Fault Injected", "Deployed broken manifest with non-existent tag :v999.999-broken."),
+        ("Observed Failure", "Pod entered ErrImagePull and escalated to ImagePullBackOff (0/1 ready)."),
+        ("Diagnosis Protocol", "Inspected Kubelet events via kubectl describe pod, confirming 404 tag mismatch."),
         ("Remediation", "Patched deployment with valid image tag (ghcr.io/...:local-verified). Pod recovered to Running."),
-        ("Evidence", "Documented in evidence/m8-troubleshooting-image.txt.")
+        ("Audit Evidence", "Captured full CLI diagnosis log in evidence/m8-troubleshooting-image.txt.")
     ]
     for idx, (title, desc) in enumerate(lab1_pts):
         p_t = tf8_1.paragraphs[0] if idx == 0 else tf8_1.add_paragraph()
         p_t.text = f"▸ {title}: {desc}"
-        p_t.font.size = Pt(11)
+        p_t.font.size = Pt(12)
         p_t.font.color.rgb = TEXT_MAIN
 
     # Lab 2
@@ -410,16 +394,16 @@ def create_presentation():
     tf8_2 = tb8_2.text_frame
     tf8_2.word_wrap = True
     lab2_pts = [
-        ("Fault Injected", "Configured Service with typo in selector: app=bookflow-be-wrong instead of app.kubernetes.io/name=bookflow-backend."),
-        ("Observed Symptoms", "kubectl get endpoints showed <none>; curl requests received 502/504 Bad Gateway."),
-        ("Diagnosis Protocol", "Compared pod labels with Service spec.selector to isolate the selector discrepancy."),
-        ("Remediation", "Aligned Service selector to match pod labels; endpoints immediately populated 2 healthy IPs."),
-        ("Evidence", "Documented in evidence/m8-troubleshooting-service.txt.")
+        ("Fault Injected", "Configured Service with typo in selector: app=bookflow-be-wrong."),
+        ("Observed Failure", "kubectl get endpoints returned <none>; curl requests received 502 Bad Gateway."),
+        ("Diagnosis Protocol", "Compared pod labels with Service spec.selector to isolate the label discrepancy."),
+        ("Remediation", "Aligned Service selector to match pod labels; endpoints immediately populated 2 IPs."),
+        ("Audit Evidence", "Captured full CLI diagnosis log in evidence/m8-troubleshooting-service.txt.")
     ]
     for idx, (title, desc) in enumerate(lab2_pts):
         p_t = tf8_2.paragraphs[0] if idx == 0 else tf8_2.add_paragraph()
         p_t.text = f"▸ {title}: {desc}"
-        p_t.font.size = Pt(11)
+        p_t.font.size = Pt(12)
         p_t.font.color.rgb = TEXT_MAIN
 
     # ==========================================================
@@ -444,48 +428,50 @@ def create_presentation():
         p_t = tf9.paragraphs[0] if idx == 0 else tf9.add_paragraph()
         p_t.text = f"• {title}"
         p_t.font.bold = True
-        p_t.font.size = Pt(12)
+        p_t.font.size = Pt(13)
         p_t.font.color.rgb = TEXT_MAIN
         p_d = tf9.add_paragraph()
         p_d.text = f"   {desc}"
-        p_d.font.size = Pt(10)
+        p_d.font.size = Pt(11)
         p_d.font.color.rgb = TEXT_MUTED
 
-    # Right: Embedded Screenshot
+    # Right: Embedded Screenshot (Bounded)
     add_card(s9, Inches(5.5), Inches(1.6), Inches(7.0), Inches(5.2))
     img9_path = r"evidence\m9-grafana-dashboard.png"
     if os.path.exists(img9_path):
-        s9.shapes.add_picture(img9_path, Inches(5.6), Inches(1.8), Inches(6.8), Inches(4.8))
+        s9.shapes.add_picture(img9_path, Inches(5.7), Inches(1.85), Inches(6.6), Inches(4.7))
 
     # ==========================================================
-    # SLIDE 10: Capstone Summary & Production Takeaways
+    # SLIDE 10: Capstone Summary & Production Takeaways (2x2 Grid)
     # ==========================================================
     s10 = prs.slides.add_slide(blank_slide_layout)
     add_background(s10)
     add_header(s10, "Summary & Impact", "Capstone Deliverables & DevOps Mastery", 10)
 
     summary_boxes = [
-        ("100% Verified Local Stack", "Docker Desktop Kubernetes running 5/5 healthy pods, NGINX Ingress, Prometheus, and Grafana."),
-        ("Zero Leaked Secrets / $0 Billing", "Strict pre-push secret audit passed; Terraform IaC statically validated without cloud billing surprises."),
-        ("Production CI/CD Automation", "GitHub Actions pipeline with 16/16 Pytest gate, 0 Trivy CVEs, and immutable GHCR image packaging."),
-        ("Resilient & Observable", "Horizontal Pod Autoscaler (HPA) and live Grafana dashboard providing real-time telemetry."),
-        ("Comprehensive Evidence", "37 genuine log, script, and screenshot artifacts indexing all rubric criteria.")
+        ("100% Verified Local Stack", "Docker Desktop Kubernetes running 5/5 healthy pods, NGINX Ingress on port 8088, and persistent PostgreSQL storage surviving pod restarts."),
+        ("Zero Secret Leaks & $0 Cloud Costs", "Automated pre-push scanner passed with 0 secret patterns; Terraform IaC statically validated without unexpected AWS charges ($0.00 spent)."),
+        ("Production CI/CD Automation", "GitHub Actions pipeline with 16/16 Pytest blocking gate, Trivy CVE security checks (0 CVEs), and immutable GHCR image tags."),
+        ("Observability & 37 Evidence Artifacts", "Prometheus metrics scraping with target status UP, live 4-panel Grafana dashboard, HPA dynamic scaling, and 37 comprehensive evidence files.")
     ]
     for idx, (head, desc) in enumerate(summary_boxes):
-        y = Inches(1.6 + idx * 1.05)
-        c = s10.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), y, Inches(11.7), Inches(0.9))
+        col = idx % 2
+        row = idx // 2
+        x = Inches(0.8 + col * 5.9)
+        y = Inches(1.6 + row * 2.7)
+        c = s10.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(5.7), Inches(2.5))
         c.fill.solid()
         c.fill.fore_color.rgb = CARD_BG
         c.line.color.rgb = CARD_BORDER
         tf = c.text_frame
         p = tf.paragraphs[0]
         p.text = f"✔  {head}"
-        p.font.size = Pt(13)
+        p.font.size = Pt(14)
         p.font.bold = True
-        p.font.color.rgb = PRIMARY_INDIGO
+        p.font.color.rgb = PRIMARY_INDIGO if col == 1 else EMERALD
         p_d = tf.add_paragraph()
         p_d.text = f"     {desc}"
-        p_d.font.size = Pt(11)
+        p_d.font.size = Pt(12)
         p_d.font.color.rgb = TEXT_MUTED
 
     # Save Presentation

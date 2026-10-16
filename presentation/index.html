@@ -6,18 +6,24 @@
   <title>BookFlow — DevOps Capstone Presentation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #F8FAFC;
       --card-bg: #FFFFFF;
       --border: #E2E8F0;
+      --border-dark: #CBD5E1;
       --text: #0F172A;
-      --text-muted: #64748B;
+      --text-muted: #475569;
       --primary: #4F46E5;
+      --primary-hover: #4338CA;
       --primary-light: #EEF2FF;
-      --emerald: #10B981;
-      --amber: #F59E0B;
+      --emerald: #059669;
+      --emerald-light: #ECFDF5;
+      --rose: #E11D48;
+      --rose-light: #FFF1F2;
+      --amber: #D97706;
+      --amber-light: #FFFBEB;
     }
 
     * {
@@ -35,27 +41,26 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 16px;
+      padding: 20px;
       overflow-x: hidden;
     }
 
-    /* Presentation Frame (Responsive Widescreen) */
+    /* Fixed Widescreen 16:9 Presentation Stage (Strict No-Overflow) */
     .deck-container {
-      width: 100%;
-      max-width: 1240px;
+      width: 1280px;
       height: 720px;
       background-color: var(--bg);
-      border-radius: 16px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      border-radius: 18px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5);
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
-    /* Slide Progress Bar */
+    /* Top Progress Bar */
     .progress-bar {
-      height: 4px;
+      height: 5px;
       background-color: var(--border);
       width: 100%;
       position: absolute;
@@ -66,19 +71,21 @@
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #4F46E5, #6366F1);
+      background: linear-gradient(90deg, #4F46E5, #818CF8);
       transition: width 0.3s ease;
       width: 10%;
     }
 
-    /* Slide Layout */
+    /* Slide Frame */
     .slide {
       display: none;
       width: 100%;
       height: 100%;
-      padding: 44px 56px 40px;
+      padding: 36px 48px 32px;
       flex-direction: column;
-      animation: fadeIn 0.25s ease-out;
+      animation: fadeIn 0.2s ease-out;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .slide.active {
@@ -86,456 +93,548 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Header */
+    /* Slide Header */
     .slide-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 24px;
+      align-items: center;
+      margin-bottom: 20px;
+      height: 52px;
+      flex-shrink: 0;
     }
 
     .tag-badge {
       display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 800;
       color: var(--primary);
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-bottom: 6px;
+      margin-bottom: 2px;
     }
 
     .slide-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       color: var(--text);
       letter-spacing: -0.02em;
+      line-height: 1.2;
     }
 
     .slide-num {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary);
       background-color: #FFFFFF;
-      padding: 4px 12px;
+      padding: 6px 16px;
       border-radius: 9999px;
       border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
 
-    /* Reusable Card */
+    /* Content Layout Containers */
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Cards */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 22px 26px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 6px -1px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
     .card h3 {
       font-family: 'Outfit', sans-serif;
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    /* Grids */
+    /* Symmetrical Grids */
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
-      flex: 1;
+      height: 100%;
+      min-height: 0;
     }
 
     .grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      flex: 1;
+      gap: 18px;
+      height: 100%;
+      min-height: 0;
     }
 
-    .grid-content-img {
+    /* Split Content + Image Layout */
+    .grid-split {
       display: grid;
-      grid-template-columns: 420px 1fr;
+      grid-template-columns: 480px 1fr;
       gap: 24px;
-      flex: 1;
-      align-items: stretch;
+      height: 100%;
+      min-height: 0;
     }
 
-    /* Bullet List */
-    .bullet-list {
+    /* Strict Bounded Screenshot Frame */
+    .screenshot-frame {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      height: 100%;
+      min-height: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+
+    .screenshot-frame img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .screenshot-caption {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Typography & Bullet Lists */
+    .item-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
+      overflow-y: auto;
+      padding-right: 4px;
     }
 
-    .bullet-list li {
-      font-size: 13.5px;
-      line-height: 1.5;
+    .item-list li {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .item-title {
+      font-size: 16px;
+      font-weight: 700;
       color: var(--text);
-    }
-
-    .bullet-list li strong {
-      display: block;
-      color: var(--text);
-      font-size: 14.5px;
-      margin-bottom: 2px;
-    }
-
-    .bullet-list li span {
-      color: var(--text-muted);
-    }
-
-    .check-list li strong::before {
-      content: "✔ ";
-      color: var(--emerald);
-    }
-
-    .dot-list li strong::before {
-      content: "• ";
-      color: var(--primary);
-    }
-
-    /* Screenshot Container */
-    .screenshot-box {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 8px;
     }
 
-    .screenshot-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .item-desc {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-muted);
+      padding-left: 20px;
     }
+
+    /* Badges & Icons */
+    .dot-icon {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: var(--primary);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .check-icon {
+      color: var(--emerald);
+      font-weight: 800;
+      font-size: 16px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .cross-icon {
+      color: var(--rose);
+      font-weight: 800;
+      font-size: 16px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* Terminal Card */
+    .terminal-box {
+      background: #0B0F17;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      color: #E2E8F0;
+      border: 1px solid #1E293B;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .term-cmd { color: #38BDF8; }
+    .term-err { color: #F87171; }
+    .term-ok  { color: #4ADE80; }
 
     /* Title Slide Specifics */
     .title-slide {
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 60px;
+      padding: 48px;
     }
 
-    .title-banner {
+    .title-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 16px;
+      padding: 6px 18px;
       background-color: var(--primary-light);
       color: var(--primary);
       border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 18px;
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+      border: 1px solid #C7D2FE;
     }
 
     .hero-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 42px;
+      font-size: 46px;
       font-weight: 800;
       letter-spacing: -0.03em;
       color: var(--text);
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      line-height: 1.15;
     }
 
     .hero-sub {
-      font-size: 18px;
+      font-size: 19px;
       color: var(--text-muted);
-      max-width: 760px;
+      max-width: 840px;
       line-height: 1.5;
-      margin-bottom: 36px;
+      margin-bottom: 40px;
     }
 
-    .title-highlights {
+    .title-grid {
       display: grid;
-      grid-template-columns: repeat(3, 260px);
-      gap: 20px;
+      grid-template-columns: repeat(3, 290px);
+      gap: 24px;
     }
 
-    .title-mini-card {
+    .title-card {
       background: #FFFFFF;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 20px;
+      border-radius: 14px;
+      padding: 20px 22px;
       text-align: left;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
     }
 
-    .title-mini-card h4 {
+    .title-card h4 {
       font-family: 'Outfit', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    .title-mini-card p {
-      font-size: 12px;
+    .title-card p {
+      font-size: 13.5px;
       color: var(--text-muted);
+      line-height: 1.4;
     }
 
-    /* Bottom Controls */
+    /* Bottom Nav Bar */
     .controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 24px;
+      padding: 14px 20px 0;
       width: 1280px;
       color: #94A3B8;
-      font-size: 12px;
+      font-size: 13px;
     }
 
     .btn-group {
       display: flex;
-      gap: 8px;
+      gap: 10px;
     }
 
     .nav-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       color: #FFFFFF;
-      padding: 6px 14px;
-      border-radius: 6px;
+      padding: 8px 18px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 12px;
-      transition: background 0.15s;
+      font-weight: 700;
+      font-size: 13px;
+      transition: background 0.15s, transform 0.1s;
     }
 
     .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .nav-btn:active {
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
 
+  <!-- Fixed Widescreen 16:9 Presentation Stage -->
   <div class="deck-container" id="deck">
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <!-- ==================== SLIDE 1 ==================== -->
+    <!-- ==================== SLIDE 1: COVER ==================== -->
     <div class="slide title-slide active" data-slide="1">
-      <div class="title-banner">DevOps Capstone Presentation</div>
+      <div class="title-pill">DevOps Capstone Project Defense</div>
       <h1 class="hero-title">BookFlow: Student Library Lending Tracker</h1>
-      <p class="hero-sub">Production-grade cloud-native microservices platform featuring automated CI/CD pipelines, container security gates, Kubernetes orchestration, and full-stack observability.</p>
+      <p class="hero-sub">Production-grade cloud-native microservices platform featuring automated CI/CD pipelines, container security gates, declarative Kubernetes orchestration, and full-stack observability.</p>
       
-      <div class="title-highlights">
-        <div class="title-mini-card">
+      <div class="title-grid">
+        <div class="title-card">
           <h4>Production Architecture</h4>
-          <p>FastAPI, React 18, PostgreSQL 16</p>
+          <p>FastAPI, React 18, PostgreSQL 16 with non-root security.</p>
         </div>
-        <div class="title-mini-card">
-          <h4>Immutable Pipelines</h4>
-          <p>GitHub Actions, Trivy, GHCR</p>
+        <div class="title-card">
+          <h4>Automated CI/CD Gates</h4>
+          <p>GitHub Actions, 16/16 Pytest, Trivy CVE scanning, GHCR.</p>
         </div>
-        <div class="title-mini-card">
+        <div class="title-card">
           <h4>Kubernetes Native</h4>
-          <p>Helm, Ingress, Prometheus, Grafana</p>
+          <p>Helm chart, 2-replica HA, NGINX Ingress, Prometheus & Grafana.</p>
         </div>
       </div>
     </div>
 
-    <!-- ==================== SLIDE 2 ==================== -->
+    <!-- ==================== SLIDE 2: PROBLEM & SOLUTION ==================== -->
     <div class="slide" data-slide="2">
       <div class="slide-header">
         <div>
-          <span class="tag-badge">Context & Objectives</span>
-          <h2 class="slide-title">Problem Statement & Solution Architecture</h2>
+          <span class="tag-badge">Context & Problem Space</span>
+          <h2 class="slide-title">Problem Statement & Cloud-Native Solution</h2>
         </div>
         <div class="slide-num">2 / 10</div>
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <h3>The Problem Space</h3>
-          <ul class="bullet-list dot-list">
-            <li>
-              <strong>Campus Library Bottleneck</strong>
-              <span>Manual checkout registers result in lending latency, misplaced student records, and untracked overdue books.</span>
-            </li>
-            <li>
-              <strong>Fragile Legacy Deployments</strong>
-              <span>Host port conflicts (5432 collision), environment drift, and single-point-of-failure outages during peak campus hours.</span>
-            </li>
-            <li>
-              <strong>Zero Operational Visibility</strong>
-              <span>No telemetry into API request latency, database query bottlenecks, or container resource exhaustion under load.</span>
-            </li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>The Cloud-Native Solution</h3>
-          <ul class="bullet-list check-list">
-            <li>
-              <strong>Containerized Microservices</strong>
-              <span>Decoupled FastAPI backend and React frontend running non-root containers with PostgreSQL persistence.</span>
-            </li>
-            <li>
-              <strong>Automated Security & Test Gates</strong>
-              <span>Pre-commit secret scans, 16/16 Pytest tests, and Trivy CVE scanning in GitHub Actions.</span>
-            </li>
-            <li>
-              <strong>Declarative Kubernetes & Helm</strong>
-              <span>Self-healing 2-replica deployments, NGINX Ingress traffic routing, and dynamic Horizontal Pod Autoscaling (HPA).</span>
-            </li>
-            <li>
-              <strong>Continuous Real-Time Telemetry</strong>
-              <span>Prometheus metrics harvesting paired with a 4-panel live Grafana observability dashboard.</span>
-            </li>
-          </ul>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card" style="border-top: 4px solid var(--rose);">
+            <h3 style="color: var(--rose);">Legacy Operational Bottlenecks</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="cross-icon">✕</span> Manual Library Circulation Delays</div>
+                <div class="item-desc">Paper-based student checkouts create lending queues, inventory discrepancies, and untracked overdue book returns.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="cross-icon">✕</span> Fragile Monolithic Deployments</div>
+                <div class="item-desc">Host port collisions (e.g. Postgres port 5432), environment drift between dev and staging, and single-point-of-failure outages.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="cross-icon">✕</span> Blindspot Operations</div>
+                <div class="item-desc">Zero telemetry into API request latency, database query bottlenecks, or memory saturation during exam periods.</div>
+              </li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 4px solid var(--emerald);">
+            <h3 style="color: var(--emerald);">Cloud-Native Solution Architecture</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> Containerized Microservices</div>
+                <div class="item-desc">Decoupled FastAPI backend and React 18 frontend running non-root containers with persistent PostgreSQL storage.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> Automated Quality & Security Gates</div>
+                <div class="item-desc">Pre-push secret scanners, 16/16 Pytest blocking tests, and automated Trivy container vulnerability scanning in CI.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> Declarative Kubernetes & Helm</div>
+                <div class="item-desc">Self-healing 2-replica deployments, NGINX Ingress traffic routing, and dynamic Horizontal Pod Autoscaling (HPA).</div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== SLIDE 3 ==================== -->
+    <!-- ==================== SLIDE 3: TECH STACK ==================== -->
     <div class="slide" data-slide="3">
       <div class="slide-header">
         <div>
-          <span class="tag-badge">Architecture Stack</span>
+          <span class="tag-badge">Architecture & Tooling</span>
           <h2 class="slide-title">Technology Stack & Toolchain</h2>
         </div>
         <div class="slide-num">3 / 10</div>
       </div>
-      <div class="grid-4">
-        <div class="card">
-          <h3>Application Core</h3>
-          <ul class="bullet-list">
-            <li><strong>FastAPI</strong><span>Python 3.11/3.13 RESTful API</span></li>
-            <li><strong>React 18 & Vite 5</strong><span>Light enterprise UI</span></li>
-            <li><strong>PostgreSQL 16</strong><span>Relational persistence</span></li>
-            <li><strong>Alembic</strong><span>Database migrations</span></li>
-            <li><strong>SQLAlchemy</strong><span>Object-relational mapper</span></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Testing & Quality</h3>
-          <ul class="bullet-list">
-            <li><strong>Pytest 8.3</strong><span>16/16 tests passing</span></li>
-            <li><strong>SQLite Memory</strong><span>Isolated test database</span></li>
-            <li><strong>Docker Compose</strong><span>Multi-container stack</span></li>
-            <li><strong>Vite Bundler</strong><span>Optimized production JS</span></li>
-            <li><strong>Secret Scanner</strong><span>Zero secret leakage</span></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>CI/CD & Security</h3>
-          <ul class="bullet-list">
-            <li><strong>GitHub Actions</strong><span>Automated workflows</span></li>
-            <li><strong>Trivy Scanner</strong><span>High/Critical CVE gate</span></li>
-            <li><strong>GHCR Registry</strong><span>Immutable container tags</span></li>
-            <li><strong>Git SHA Tagging</strong><span>Deterministic builds</span></li>
-            <li><strong>Non-Root UID</strong><span>UID 10001 / 101 security</span></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>K8s & Metrics</h3>
-          <ul class="bullet-list">
-            <li><strong>Kubernetes v1.31</strong><span>Container orchestrator</span></li>
-            <li><strong>Helm 3</strong><span>Declarative packaging</span></li>
-            <li><strong>NGINX Ingress</strong><span>L7 traffic routing</span></li>
-            <li><strong>Prometheus</strong><span>Metrics collection</span></li>
-            <li><strong>Grafana & HPA</strong><span>Dashboards & autoscaling</span></li>
-          </ul>
+      <div class="slide-body">
+        <div class="grid-4">
+          <div class="card">
+            <h3>Application Core</h3>
+            <ul class="item-list">
+              <li><div class="item-title"><span class="dot-icon"></span> FastAPI 0.115</div><div class="item-desc">High-performance async Python backend.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> React 18 & Vite 5</div><div class="item-desc">Light enterprise circulation desk UI.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> PostgreSQL 16</div><div class="item-desc">Relational database with Alembic migrations.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> SQLAlchemy 2.0</div><div class="item-desc">Type-safe object-relational mapping.</div></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Testing & Quality</h3>
+            <ul class="item-list">
+              <li><div class="item-title"><span class="dot-icon"></span> Pytest 8.3</div><div class="item-desc">16/16 unit tests with full coverage.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> SQLite In-Memory</div><div class="item-desc">StaticPool isolated test database.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Docker Compose</div><div class="item-desc">Multi-container local orchestration.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Secret Scanner</div><div class="item-desc">Zero credential leaks in git history.</div></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>CI/CD & Security</h3>
+            <ul class="item-list">
+              <li><div class="item-title"><span class="dot-icon"></span> GitHub Actions</div><div class="item-desc">Automated test and build pipeline.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Aquasec Trivy</div><div class="item-desc">High/Critical CVE container gate.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> GHCR Packages</div><div class="item-desc">GitHub Container Registry publishing.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Git SHA Tagging</div><div class="item-desc">Immutable, deterministic deployments.</div></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>K8s & Telemetry</h3>
+            <ul class="item-list">
+              <li><div class="item-title"><span class="dot-icon"></span> Kubernetes 1.31</div><div class="item-desc">Container runtime on Docker Desktop.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Helm 3 Charts</div><div class="item-desc">Declarative release management.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> NGINX Ingress</div><div class="item-desc">L7 reverse proxy on port 8088.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Prometheus & Grafana</div><div class="item-desc">Metrics collection & live dashboards.</div></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== SLIDE 4 ==================== -->
+    <!-- ==================== SLIDE 4: FRONTEND UI ==================== -->
     <div class="slide" data-slide="4">
       <div class="slide-header">
         <div>
-          <span class="tag-badge">Frontend & Circulation</span>
-          <h2 class="slide-title">Enterprise Application & Circulation Desk UI</h2>
+          <span class="tag-badge">Application Layer</span>
+          <h2 class="slide-title">Enterprise Lending Desk & Clean White UI</h2>
         </div>
         <div class="slide-num">4 / 10</div>
       </div>
-      <div class="grid-content-img">
-        <div class="card">
-          <h3>Circulation Desk Features</h3>
-          <ul class="bullet-list dot-list">
-            <li>
-              <strong>White Enterprise Palette</strong>
-              <span>Modern, high-contrast SaaS interface with #FFFFFF cards, #F8FAFC canvas, and indigo accents.</span>
-            </li>
-            <li>
-              <strong>Live KPI Metrics Deck</strong>
-              <span>Real-time counter for Total Books (7), Available on Shelves (4), Active Loans (3), and Overdue Books (0).</span>
-            </li>
-            <li>
-              <strong>Dynamic Search & Filters</strong>
-              <span>Instant client-side filter by title, author, or student roll number with category chips.</span>
-            </li>
-            <li>
-              <strong>Student Checkout Workflow</strong>
-              <span>Dedicated interactive modals for lending books to students (with roll ID and loan period) and catalogue entry.</span>
-            </li>
-          </ul>
-        </div>
-        <div class="screenshot-box">
-          <img src="../evidence/m1-app-browser.png" alt="BookFlow White UI">
+      <div class="slide-body">
+        <div class="grid-split">
+          <div class="card">
+            <h3>Circulation Desk Features</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Modern Enterprise White Palette</div>
+                <div class="item-desc">High-contrast, clean SaaS layout with #FFFFFF cards, #F8FAFC canvas, #E2E8F0 borders, and rich indigo accents.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Live Circulation KPI Metrics</div>
+                <div class="item-desc">Real-time counter for Total Books (7), Available on Shelves (4), Active Loans (3), and Overdue Books (0).</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Dynamic Search & Multi-Filters</div>
+                <div class="item-desc">Client-side instant search across titles, authors, and student names with Category chips.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> RESTful API Integration</div>
+                <div class="item-desc">Connected to FastAPI backend with automated Alembic database schema migrations.</div>
+              </li>
+            </ul>
+          </div>
+          <div class="screenshot-frame">
+            <img src="../evidence/m1-app-browser.png" alt="BookFlow White UI">
+            <div class="screenshot-caption">Figure 4.1: BookFlow Circulation Desk running at http://localhost:3000</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== SLIDE 5 ==================== -->
+    <!-- ==================== SLIDE 5: QA & WORKFLOWS ==================== -->
     <div class="slide" data-slide="5">
       <div class="slide-header">
         <div>
-          <span class="tag-badge">Security & Quality</span>
-          <h2 class="slide-title">Quality Assurance & Defense-in-Depth Hardening</h2>
+          <span class="tag-badge">Verification & Workflows</span>
+          <h2 class="slide-title">Quality Assurance & Student Loan Workflow</h2>
         </div>
         <div class="slide-num">5 / 10</div>
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <h3>16/16 Pytest Test Suite</h3>
-          <ul class="bullet-list check-list">
-            <li><strong>Full Endpoint Coverage</strong><span>Verified GET, POST, PUT, DELETE, /health, /ready, and /metrics.</span></li>
-            <li><strong>Lending Business Rules</strong><span>Double-borrow prevention, valid student assignment, and loan return checks.</span></li>
-            <li><strong>Fast Execution</strong><span>Completed in 1.32s with zero flaky tests.</span></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Isolated Test Database</h3>
-          <ul class="bullet-list check-list">
-            <li><strong>In-Memory SQLite Engine</strong><span>Uses StaticPool to isolate test runs completely.</span></li>
-            <li><strong>Zero Production Pollution</strong><span>No test records left on disk or in the production PostgreSQL database.</span></li>
-            <li><strong>Automatic Fixtures</strong><span>Configured in backend/tests/conftest.py for reliable reproducibility.</span></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Non-Root Container Enforcement</h3>
-          <ul class="bullet-list check-list">
-            <li><strong>Backend Non-Root</strong><span>Runs as dedicated UID 10001 (appuser).</span></li>
-            <li><strong>Frontend Non-Root</strong><span>Multi-stage build runs as UID 101 (nginx-unprivileged).</span></li>
-            <li><strong>Attack Surface Reduction</strong><span>Privilege escalation blocked inside running containers.</span></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Pre-Push Secret Hygiene</h3>
-          <ul class="bullet-list check-list">
-            <li><strong>Automated Audit Tool</strong><span>Custom scanner scripts/scan_secrets.py audits git diffs.</span></li>
-            <li><strong>0 Leaked Secrets</strong><span>558 KB of commit history scanned with zero secret or key patterns.</span></li>
-            <li><strong>Audited .gitignore</strong><span>Strictly ignores .env, .venv, .tfvars, and caches.</span></li>
-          </ul>
+      <div class="slide-body">
+        <div class="grid-split">
+          <div class="card">
+            <h3>Automated Verification & Controls</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> 16/16 Pytest Test Suite</div>
+                <div class="item-desc">100% passing in 1.32s covering CRUD, health checks, metrics schema, and lending rule enforcement.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> Zero Database Pollution</div>
+                <div class="item-desc">In-memory SQLite with StaticPool ensures zero leftover data in production PostgreSQL.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> Non-Root Containers</div>
+                <div class="item-desc">Backend runs as UID 10001 (appuser); frontend runs as UID 101 (nginx-unprivileged).</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> Interactive Checkout Modal</div>
+                <div class="item-desc">Validates student roll numbers and due date calculation (7, 14, or 30-day loan periods).</div>
+              </li>
+            </ul>
+          </div>
+          <div class="screenshot-frame">
+            <img src="../evidence/m1-loan-modal.png" alt="Student Loan Workflow Modal">
+            <div class="screenshot-caption">Figure 5.1: Interactive Student Book Loan Dialog with roll ID verification</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== SLIDE 6 ==================== -->
+    <!-- ==================== SLIDE 6: CI/CD PIPELINE ==================== -->
     <div class="slide" data-slide="6">
       <div class="slide-header">
         <div>
@@ -544,86 +643,92 @@
         </div>
         <div class="slide-num">6 / 10</div>
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Three-Stage CI/CD Architecture</h3>
-          <ul class="bullet-list dot-list">
-            <li>
-              <strong>Stage 1: Automated Quality Gate</strong>
-              <span>Executes 16/16 Pytest unit tests and validates frontend Vite production bundling. Failure aborts the pipeline.</span>
-            </li>
-            <li>
-              <strong>Stage 2: Trivy Container Vulnerability Scan</strong>
-              <span>Scans both backend and frontend images. Strictly fails with exit-code 1 on HIGH or CRITICAL CVEs (0 detected).</span>
-            </li>
-            <li>
-              <strong>Stage 3: Immutable GHCR Publishing</strong>
-              <span>Pushes images to GitHub Container Registry tagged with Git commit SHA (e.g. backend:1ff6ddf) for complete auditability.</span>
-            </li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Verified Pipeline Results</h3>
-          <ul class="bullet-list check-list">
-            <li>
-              <strong>Run 38937119033 Concluded Green</strong>
-              <span>100% success on main branch push.</span>
-            </li>
-            <li>
-              <strong>Zero Security Compromises</strong>
-              <span>No CVE waivers or bypassed Trivy checks.</span>
-            </li>
-            <li>
-              <strong>Automated Helm Verification</strong>
-              <span>helm lint and template rendering verified before deployment.</span>
-            </li>
-            <li>
-              <strong>Controlled Deployment Guard</strong>
-              <span>Deploy job safely guarded to prevent unauthorized cloud spend.</span>
-            </li>
-          </ul>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card" style="border-top: 4px solid var(--primary);">
+            <h3>Stage 1: Test Gate</h3>
+            <ul class="item-list">
+              <li><div class="item-title"><span class="dot-icon"></span> Automated Trigger</div><div class="item-desc">Fires on every push to main.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Python Environment</div><div class="item-desc">Installs pinned dependencies.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> 16/16 Pytest Tests</div><div class="item-desc">Strict quality gate blocks failure.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Vite Production Build</div><div class="item-desc">Compiles React bundle in 5.3s.</div></li>
+            </ul>
+            <div class="terminal-box">
+              <span class="term-ok">✔ 16 passed in 1.32s</span>
+              <span class="term-ok">✔ vite build: 0 errors</span>
+            </div>
+          </div>
+          <div class="card" style="border-top: 4px solid var(--rose);">
+            <h3>Stage 2: Trivy CVE Gate</h3>
+            <ul class="item-list">
+              <li><div class="item-title"><span class="dot-icon"></span> Docker Container Builds</div><div class="item-desc">Builds backend & frontend images.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Vulnerability Scanner</div><div class="item-desc">Aquasec Trivy scans both images.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Strict Enforcement</div><div class="item-desc">Fails on HIGH or CRITICAL CVEs.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Security Result</div><div class="item-desc">0 CVEs detected across all layers.</div></li>
+            </ul>
+            <div class="terminal-box">
+              <span class="term-cmd">$ trivy image --severity HIGH,CRIT</span>
+              <span class="term-ok">Total: 0 (HIGH: 0, CRITICAL: 0)</span>
+            </div>
+          </div>
+          <div class="card" style="border-top: 4px solid var(--emerald);">
+            <h3>Stage 3: GHCR Publishing</h3>
+            <ul class="item-list">
+              <li><div class="item-title"><span class="dot-icon"></span> GitHub Registry Auth</div><div class="item-desc">Uses GITHUB_TOKEN permissions.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Immutable SHA Tagging</div><div class="item-desc">Tags with exact commit SHA.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Package Provenance</div><div class="item-desc">Traceable from commit to container.</div></li>
+              <li><div class="item-title"><span class="dot-icon"></span> Deployment Guard</div><div class="item-desc">Zero unexpected cloud charges.</div></li>
+            </ul>
+            <div class="terminal-box">
+              <span class="term-cmd">Pushed: backend:1ff6ddf</span>
+              <span class="term-ok">Run 38937119033: SUCCESS</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== SLIDE 7 ==================== -->
+    <!-- ==================== SLIDE 7: K8S & INGRESS ==================== -->
     <div class="slide" data-slide="7">
       <div class="slide-header">
         <div>
-          <span class="tag-badge">Orchestration & Helm</span>
+          <span class="tag-badge">Orchestration & Routing</span>
           <h2 class="slide-title">Kubernetes & Declarative Helm Architecture</h2>
         </div>
         <div class="slide-num">7 / 10</div>
       </div>
-      <div class="grid-content-img">
-        <div class="card">
-          <h3>Production Orchestration</h3>
-          <ul class="bullet-list dot-list">
-            <li>
-              <strong>Custom Modular Helm Chart</strong>
-              <span>Authored in helm/bookflow with 0 lint errors, parameterized values, and clean release management.</span>
-            </li>
-            <li>
-              <strong>High Availability (HA) Deployments</strong>
-              <span>Runs 2 backend replicas + 2 frontend replicas + 1 PostgreSQL stateful pod (5/5 running, 0 restarts).</span>
-            </li>
-            <li>
-              <strong>NGINX Ingress Controller</strong>
-              <span>Single entrypoint routing root (/) to frontend and (/api, /metrics) to backend services on port 8088.</span>
-            </li>
-            <li>
-              <strong>Probes & Storage Durability</strong>
-              <span>Liveness/Readiness probes prevent blackhole traffic; Kubernetes PVC ensures PostgreSQL persistence.</span>
-            </li>
-          </ul>
-        </div>
-        <div class="screenshot-box">
-          <img src="../evidence/m8-ingress-browser.png" alt="Ingress Browser Access">
+      <div class="slide-body">
+        <div class="grid-split">
+          <div class="card">
+            <h3>Cluster Deployment Architecture</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Declarative Helm Packaging</div>
+                <div class="item-desc">Parameterized values for dev/prod with 0 lint errors (helm lint ./helm/bookflow).</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> High Availability (5/5 Pods)</div>
+                <div class="item-desc">2 backend replicas + 2 frontend replicas + 1 PostgreSQL stateful pod running cleanly.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> NGINX Ingress Routing</div>
+                <div class="item-desc">Routes root (/) to frontend and (/api, /metrics) to backend services on port 8088.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Persistent Volume Claims (PVC)</div>
+                <div class="item-desc">PostgreSQL data directory mounted to PVC, surviving pod restarts and rollouts.</div>
+              </li>
+            </ul>
+          </div>
+          <div class="screenshot-frame">
+            <img src="../evidence/m8-ingress-browser.png" alt="Ingress Browser Routing">
+            <div class="screenshot-caption">Figure 7.1: Application routed via NGINX Ingress at http://localhost:8088</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== SLIDE 8 ==================== -->
+    <!-- ==================== SLIDE 8: TROUBLESHOOTING LABS ==================== -->
     <div class="slide" data-slide="8">
       <div class="slide-header">
         <div>
@@ -632,31 +737,57 @@
         </div>
         <div class="slide-num">8 / 10</div>
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Lab 1: ImagePullBackOff Incident</h3>
-          <ul class="bullet-list dot-list">
-            <li><strong>Fault Injected</strong><span>Deployed broken deployment referencing invalid image tag :v999.999-broken.</span></li>
-            <li><strong>Observed Failure</strong><span>Pod entered ErrImagePull and escalated to ImagePullBackOff (0/1 ready).</span></li>
-            <li><strong>Diagnosis Protocol</strong><span>Inspected Kubelet events via kubectl describe pod, confirming manifest 404 tag mismatch.</span></li>
-            <li><strong>Remediation & Recovery</strong><span>Patched image to ghcr.io/...:local-verified; pod immediately transitioned to Running.</span></li>
-            <li><strong>Evidence</strong><span>Captured full CLI diagnosis log in evidence/m8-troubleshooting-image.txt.</span></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Lab 2: Missing Endpoints Incident</h3>
-          <ul class="bullet-list dot-list">
-            <li><strong>Fault Injected</strong><span>Configured Service with typo in selector: app=bookflow-be-wrong.</span></li>
-            <li><strong>Observed Failure</strong><span>kubectl get endpoints returned &lt;none&gt;; curl requests failed with 502 Bad Gateway.</span></li>
-            <li><strong>Diagnosis Protocol</strong><span>Compared pod labels against Service spec.selector, identifying the label mismatch.</span></li>
-            <li><strong>Remediation & Recovery</strong><span>Patched selector to app.kubernetes.io/name=bookflow-backend; 2 healthy endpoints restored.</span></li>
-            <li><strong>Evidence</strong><span>Captured full CLI diagnosis log in evidence/m8-troubleshooting-service.txt.</span></li>
-          </ul>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card">
+            <h3 style="color: var(--rose);">Lab 1: ImagePullBackOff Diagnosis</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="cross-icon">✕</span> Failure Injected</div>
+                <div class="item-desc">Deployed broken manifest with non-existent tag bookflow-backend:v999.999-broken.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Diagnosis Protocol</div>
+                <div class="item-desc">Executed kubectl describe pod to inspect Kubelet events, identifying ErrImagePull 404.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> Remediation & Recovery</div>
+                <div class="item-desc">Patched manifest with verified image tag. Pod immediately recovered to 1/1 Running.</div>
+              </li>
+            </ul>
+            <div class="terminal-box">
+              <span class="term-err">Warning Failed 2m kubelet Failed to pull image</span>
+              <span class="term-cmd">$ kubectl set image deployment/...</span>
+              <span class="term-ok">pod/bookflow-backend-fix 1/1 Running</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--amber);">Lab 2: Missing Endpoints Diagnosis</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="cross-icon">✕</span> Failure Injected</div>
+                <div class="item-desc">Configured Service with typo in selector: app=bookflow-be-wrong.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Diagnosis Protocol</div>
+                <div class="item-desc">kubectl get endpoints returned &lt;none&gt;; curl requests failed with 502 Bad Gateway.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> Remediation & Recovery</div>
+                <div class="item-desc">Aligned Service selector to match pod labels; 2 healthy endpoints immediately restored.</div>
+              </li>
+            </ul>
+            <div class="terminal-box">
+              <span class="term-err">endpoints/bookflow-backend &lt;none&gt;</span>
+              <span class="term-cmd">$ kubectl apply -f fixed-service.yaml</span>
+              <span class="term-ok">endpoints/bookflow-backend 10.1.0.4:8000, 10.1.0.5:8000</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== SLIDE 9 ==================== -->
+    <!-- ==================== SLIDE 9: OBSERVABILITY & GRAFANA ==================== -->
     <div class="slide" data-slide="9">
       <div class="slide-header">
         <div>
@@ -665,70 +796,79 @@
         </div>
         <div class="slide-num">9 / 10</div>
       </div>
-      <div class="grid-content-img">
-        <div class="card">
-          <h3>Observability Architecture</h3>
-          <ul class="bullet-list dot-list">
-            <li>
-              <strong>Prometheus Instrumentator</strong>
-              <span>FastAPI middleware exposing http_requests_total, response latency histograms, and process memory.</span>
-            </li>
-            <li>
-              <strong>Active Scrape Target</strong>
-              <span>Prometheus ServiceMonitor scraping backend every 15s (Target Health: UP).</span>
-            </li>
-            <li>
-              <strong>Live 4-Panel Grafana Dashboard</strong>
-              <span>Populated panels for Request Rate (QPS), Request Latency (p95), 5xx Error Rate, and Process Memory.</span>
-            </li>
-            <li>
-              <strong>Horizontal Pod Autoscaler (HPA)</strong>
-              <span>Kubernetes HPA configured with 60% CPU utilization threshold, dynamically scaling from 2 to 5 replicas.</span>
-            </li>
-          </ul>
-        </div>
-        <div class="screenshot-box">
-          <img src="../evidence/m9-grafana-dashboard.png" alt="Grafana Live Dashboard">
+      <div class="slide-body">
+        <div class="grid-split">
+          <div class="card">
+            <h3>Observability Architecture</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Prometheus Instrumentator</div>
+                <div class="item-desc">FastAPI middleware exposing http_requests_total, response latency histograms, and memory metrics.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Active Scrape Targets</div>
+                <div class="item-desc">Prometheus ServiceMonitor scraping backend every 15s (Target Health: UP).</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Live 4-Panel Grafana Dashboard</div>
+                <div class="item-desc">Monitors Request Rate (QPS), Request Latency (p95), 5xx Error Rate, and Backend Memory.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon"></span> Horizontal Pod Autoscaler (HPA)</div>
+                <div class="item-desc">Configured with 60% CPU utilization threshold, scaling replicas dynamically under spike traffic.</div>
+              </li>
+            </ul>
+          </div>
+          <div class="screenshot-frame">
+            <img src="../evidence/m9-grafana-dashboard.png" alt="Grafana Live Telemetry Dashboard">
+            <div class="screenshot-caption">Figure 9.1: Live Grafana Dashboard at http://localhost:3001 with active traffic metrics</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== SLIDE 10 ==================== -->
+    <!-- ==================== SLIDE 10: SUMMARY ==================== -->
     <div class="slide" data-slide="10">
       <div class="slide-header">
         <div>
-          <span class="tag-badge">Summary & Impact</span>
+          <span class="tag-badge">Deliverables & Defense</span>
           <h2 class="slide-title">Capstone Deliverables & DevOps Mastery</h2>
         </div>
         <div class="slide-num">10 / 10</div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 14px; flex: 1;">
-        <div class="card" style="padding: 16px 24px;">
-          <h3 style="margin-bottom: 4px; color: var(--emerald);">✔ 100% Locally Verified Stack</h3>
-          <p style="font-size: 13.5px; color: var(--text-muted);">Docker Desktop Kubernetes running 5/5 healthy pods, NGINX Ingress, Prometheus, and Grafana with zero defects.</p>
-        </div>
-        <div class="card" style="padding: 16px 24px;">
-          <h3 style="margin-bottom: 4px; color: var(--emerald);">✔ Zero Secret Leaks & $0 Cloud Cost Incurred</h3>
-          <p style="font-size: 13.5px; color: var(--text-muted);">Automated pre-push scanner passed on 558 KB of git logs; Terraform IaC statically validated without unexpected AWS charges.</p>
-        </div>
-        <div class="card" style="padding: 16px 24px;">
-          <h3 style="margin-bottom: 4px; color: var(--emerald);">✔ Production CI/CD & Security Gates</h3>
-          <p style="font-size: 13.5px; color: var(--text-muted);">GitHub Actions pipeline with 16/16 Pytest blocking gate, Trivy CVE security checks (0 CVEs), and immutable GHCR image tags.</p>
-        </div>
-        <div class="card" style="padding: 16px 24px;">
-          <h3 style="margin-bottom: 4px; color: var(--emerald);">✔ Resilient Self-Healing & Autoscaling</h3>
-          <p style="font-size: 13.5px; color: var(--text-muted);">Horizontal Pod Autoscaler (HPA), PostgreSQL PVC volume durability, and real-world troubleshooting lab recovery.</p>
-        </div>
-        <div class="card" style="padding: 16px 24px;">
-          <h3 style="margin-bottom: 4px; color: var(--emerald);">✔ 37 Genuine Evidence Artifacts</h3>
-          <p style="font-size: 13.5px; color: var(--text-muted);">Every rubric requirement mapped to genuine log outputs, configuration files, and high-resolution 1080p browser screenshots.</p>
+      <div class="slide-body">
+        <div class="grid-2" style="grid-template-rows: 1fr 1fr; gap: 18px;">
+          <div class="card" style="border-left: 5px solid var(--emerald);">
+            <h3 style="color: var(--emerald); margin-bottom: 6px;">✔ 100% Verified Local Architecture</h3>
+            <p style="font-size: 14px; line-height: 1.5; color: var(--text-muted);">
+              Full Kubernetes deployment on Docker Desktop with 5/5 healthy pods (2 backend, 2 frontend, 1 Postgres), NGINX Ingress on port 8088, and persistent PostgreSQL storage surviving pod restarts.
+            </p>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <h3 style="color: var(--primary); margin-bottom: 6px;">✔ Security First & Zero Cloud Cost</h3>
+            <p style="font-size: 14px; line-height: 1.5; color: var(--text-muted);">
+              Non-root container execution (UID 10001 / 101), automated secret audit passed with 0 leaked patterns, and Terraform IaC statically validated without unexpected AWS charges ($0.00 spent).
+            </p>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--emerald);">
+            <h3 style="color: var(--emerald); margin-bottom: 6px;">✔ Automated Release Pipeline</h3>
+            <p style="font-size: 14px; line-height: 1.5; color: var(--text-muted);">
+              GitHub Actions CI/CD gates every push with 16/16 Pytest tests, Aquasecurity Trivy vulnerability checks (0 CVEs), and publishes immutable SHA-tagged images to GitHub Container Registry.
+            </p>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <h3 style="color: var(--primary); margin-bottom: 6px;">✔ Observability & 37 Evidence Artifacts</h3>
+            <p style="font-size: 14px; line-height: 1.5; color: var(--text-muted);">
+              Prometheus metrics scraping with target status UP, live 4-panel Grafana dashboard, HPA dynamic scaling, and 37 comprehensive evidence files indexed in evidence/INDEX.md.
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- Bottom Navigation Controls -->
+  <!-- Bottom Navigation Bar -->
   <div class="controls">
     <div><strong>Tip:</strong> Press <kbd>←</kbd> / <kbd>→</kbd> or Spacebar to change slides. Press <kbd>F11</kbd> for fullscreen recording.</div>
     <div class="btn-group">
@@ -777,6 +917,13 @@
         toggleFullscreen();
       }
     });
+
+    // Support direct slide URL param (e.g. ?slide=9)
+    const urlParams = new URLSearchParams(window.location.search);
+    const startSlide = parseInt(urlParams.get('slide'));
+    if (!isNaN(startSlide) && startSlide >= 1 && startSlide <= totalSlides) {
+      showSlide(startSlide);
+    }
   </script>
 </body>
 </html>
