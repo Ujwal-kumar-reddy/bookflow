@@ -24,7 +24,14 @@ def test_metrics(client: TestClient):
     client.get("/health")
     response = client.get("/metrics")
     assert response.status_code == 200
-    assert "http_request" in response.text or "python" in response.text or "process" in response.text
+    assert "http_requests_total" in response.text or "http_request_duration_seconds" in response.text
+
+def test_metrics_contains_http_requests_total(client: TestClient):
+    client.get("/")
+    client.get("/health")
+    response = client.get("/metrics")
+    assert response.status_code == 200
+    assert "http_requests_total" in response.text
 
 def test_create_book_success(client: TestClient):
     book_data = {

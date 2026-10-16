@@ -1,0 +1,8 @@
+﻿NAME               REFERENCE                     TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+bookflow-backend   Deployment/bookflow-backend   cpu: 4%/60%   2         5         2          143m
+NAME                                 CPU(cores)   MEMORY(bytes)   
+bookflow-backend-9c77c96b5-6rlcg     5m           98Mi            
+bookflow-backend-9c77c96b5-mvsxz     5m           77Mi            
+bookflow-frontend-685dd69554-bn7gf   1m           11Mi            
+bookflow-frontend-685dd69554-pg7ll   1m           10Mi            
+bookflow-postgres-bcfb4d9d6-w4575    3m           40Mi            

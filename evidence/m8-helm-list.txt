@@ -1,2 +1,2 @@
 ﻿NAME    	NAMESPACE	REVISION	UPDATED                              	STATUS  	CHART         	APP VERSION
-bookflow	bookflow 	1       	2026-10-16 09:35:38.6083377 +0530 IST	deployed	bookflow-1.0.0	1.0.0      
+bookflow	bookflow 	4       	2026-10-16 12:08:26.5877196 +0530 IST	deployed	bookflow-1.0.0	1.0.0      

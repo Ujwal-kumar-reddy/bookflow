@@ -1,13 +1,15 @@
 # BookFlow — Student Library Book-Lending Tracker
 
-[![BookFlow CI/CD](https://github.com/placeholder/bookflow/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/placeholder/bookflow/actions)
+[![BookFlow CI/CD](https://github.com/Ujwal-kumar-reddy/bookflow/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Ujwal-kumar-reddy/bookflow/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-1.31-326CE5?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 [![Terraform](https://img.shields.io/badge/Terraform-1.10+-7B42BC?logo=terraform&logoColor=white)](https://www.terraform.io/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.143+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-18+-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 
-**BookFlow** is a modern, cloud-native student library book circulation and loan management system built as the final capstone for Session 21 DevOps Engineering. It demonstrates a complete production-grade delivery lifecycle: from local containerized development and automated testing, through DevSecOps pipelines and Infrastructure as Code, to monitored multi-replica Kubernetes orchestration on AWS EKS.
+**BookFlow** is a modern, cloud-native student library book circulation and loan management system built as the final capstone for Session 21 DevOps Engineering. It demonstrates a complete production-grade delivery lifecycle: from local containerized development and automated testing, through DevSecOps pipelines and Infrastructure as Code, to monitored multi-replica Kubernetes orchestration on AWS EKS and local Docker Desktop.
+
+> **Note on Submission Sources:** `README.md` and `GRADING.md` are the authoritative sources of truth for this repository. `student-guide.md` is not present in the starter repository; all capabilities are aligned directly against the 100-point rubric in `GRADING.md`.
 
 ---
 
@@ -130,7 +132,7 @@ The backend features an isolated, deterministic test suite utilizing `pytest` wi
 
 - **Safety Guard:** Built-in safeguards abort test execution if accidentally targeted against any non-test database URL.
 - **Zero Pollution:** Tables are created and dropped on each test fixture, leaving no leftover database files or state behind.
-- **Coverage:** 15 test cases covering full CRUD, validation errors (422), not found (404), checkout rules, return rules, stats calculations, `/health`, `/ready`, and `/metrics`.
+- **Coverage:** 16 test cases covering full CRUD, validation errors (422), not found (404), checkout rules, return rules, stats calculations, `/health`, `/ready`, and Prometheus `/metrics` verification.
 
 Run the test suite:
 ```bash

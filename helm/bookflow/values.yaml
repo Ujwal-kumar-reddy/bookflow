@@ -1,11 +1,11 @@
 frontend:
-  image: ghcr.io/YOUR_ORG/bookflow-frontend
-  tag: latest
+  image: ghcr.io/ujwal-kumar-reddy/bookflow-frontend
+  tag: local-verified
   imagePullPolicy: IfNotPresent
 
 backend:
-  image: ghcr.io/YOUR_ORG/bookflow-backend
-  tag: latest
+  image: ghcr.io/ujwal-kumar-reddy/bookflow-backend
+  tag: local-verified
   imagePullPolicy: IfNotPresent
 
 replicaCount: 2
@@ -38,4 +38,4 @@ resources:
 
 monitoring:
   serviceMonitor:
-    enabled: false
+    enabled: true

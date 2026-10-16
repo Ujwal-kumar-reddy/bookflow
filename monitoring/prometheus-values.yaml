@@ -1,6 +1,24 @@
 grafana:
   enabled: true
+  adminPassword: "admin"
+  service:
+    type: ClusterIP
+  grafana.ini:
+    auth.anonymous:
+      enabled: true
+      org_role: Admin
+
+
 prometheus:
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorNamespaceSelector: {}
+
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false
+  tls:
+    enabled: false
+
+alertmanager:
+  enabled: false

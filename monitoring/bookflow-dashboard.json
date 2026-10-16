@@ -27,7 +27,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(rate(http_requests_total{app_name=\"BookFlow API\"}[1m])) by (handler, status)",
+          "expr": "sum(rate(http_requests_total{namespace=\"bookflow\"}[1m])) by (handler, status)",
           "legendFormat": "{{handler}} [{{status}}]",
           "range": true,
           "refId": "A"
@@ -61,7 +61,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{app_name=\"BookFlow API\"}[5m])) by (le, handler))",
+          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{namespace=\"bookflow\"}[5m])) by (le, handler))",
           "legendFormat": "p95 {{handler}}",
           "range": true,
           "refId": "A"
@@ -95,7 +95,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(rate(http_requests_total{status=~\"[45].*\"}[1m])) by (status)",
+          "expr": "sum(rate(http_requests_total{namespace=\"bookflow\",status=~\"[45].*\"}[1m])) by (status)",
           "legendFormat": "Status {{status}}",
           "range": true,
           "refId": "A"
@@ -129,7 +129,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{container=\"backend\",namespace=\"bookflow\"}[1m])) by (pod) * 1000",
+          "expr": "sum(rate(process_cpu_seconds_total{namespace=\"bookflow\"}[1m])) by (pod) * 1000",
           "legendFormat": "{{pod}}",
           "range": true,
           "refId": "A"

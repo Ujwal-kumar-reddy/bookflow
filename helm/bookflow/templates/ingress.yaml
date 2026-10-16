@@ -19,6 +19,13 @@ spec:
                 name: {{ include "bookflow.fullname" . }}-backend
                 port:
                   number: 8000
+          - path: /metrics
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "bookflow.fullname" . }}-backend
+                port:
+                  number: 8000
           - path: /
             pathType: Prefix
             backend:
@@ -30,6 +37,13 @@ spec:
     - http:
         paths:
           - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "bookflow.fullname" . }}-backend
+                port:
+                  number: 8000
+          - path: /metrics
             pathType: Prefix
             backend:
               service:

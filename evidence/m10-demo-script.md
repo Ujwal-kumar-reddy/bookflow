@@ -33,7 +33,7 @@ This script outlines the exact live demonstration flow for the final capstone ev
    ```bash
    pytest -v
    ```
-   Show all 15 tests passing across CRUD, validation errors, loan rules, health, and metrics.
+   Show all 16 tests passing across CRUD, validation errors, loan rules, health, ready, and metrics.
 
 ---
 
@@ -102,12 +102,12 @@ This script outlines the exact live demonstration flow for the final capstone ev
 ## 7. Observability — Prometheus & Grafana (M9)
 1. Show Prometheus targets:
    ```bash
-   kubectl port-forward -n monitoring svc/kube-prometheus-stack-prometheus 9090:9090
+   kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9090:9090
    ```
    Open `http://localhost:9090/targets` and show `bookflow-backend` ServiceMonitor target in state **UP**.
 2. Show Grafana Dashboard:
    ```bash
-   kubectl port-forward -n monitoring svc/kube-prometheus-stack-grafana 3001:80
+   kubectl port-forward -n monitoring svc/prometheus-grafana 3001:80
    ```
    Open `http://localhost:3001`, navigate to **"BookFlow - Application Performance & Observability"**:
    - Show HTTP Request Rate panel responding in real-time.

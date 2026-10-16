@@ -47,6 +47,18 @@ jobs:
           npm ci
           npm run build
 
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.16.4
+
+      - name: Lint and Validate Helm Chart
+        run: |
+          helm lint ./helm/bookflow
+          helm template bookflow ./helm/bookflow -f ./helm/bookflow/values.yaml > /dev/null
+          helm template bookflow ./helm/bookflow -f ./helm/bookflow/values-dev.yaml > /dev/null
+          helm template bookflow ./helm/bookflow -f ./helm/bookflow/values-prod.yaml > /dev/null
+
   build-scan-push:
     name: Build, Scan & Publish Images
     needs: test

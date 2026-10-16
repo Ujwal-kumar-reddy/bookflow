@@ -1,4 +1,11 @@
-﻿=== BACKEND USER ID ===  
+﻿============================================================
+BOOKFLOW CONTAINER NON-ROOT RUNTIME VERIFICATION
+============================================================
+
+[1] Backend Container (FastAPI):
 uid=10001(appuser) gid=10001(appuser) groups=10001(appuser)
-=== FRONTEND USER ID ===  
+
+[2] Frontend Container (Nginx unprivileged):
 uid=101(nginx) gid=101(nginx) groups=101(nginx),101(nginx)
+
+PASSED: Both container images execute as non-root users (10001 and 101).

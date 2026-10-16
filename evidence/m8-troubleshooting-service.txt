@@ -1,0 +1,63 @@
+﻿================================================================================
+KUBERNETES TROUBLESHOOTING LAB 2: Missing Endpoints (<none>) & Selector Mismatch
+Namespace: bookflow | Cluster: docker-desktop | Date: 2026-10-16 12:07:10
+================================================================================
+
+[STEP 1: SYMPTOM DETECTION]
+Command: kubectl get svc bookflow-broken-service -n bookflow
+NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+bookflow-broken-service   ClusterIP   10.105.230.145   <none>        8000/TCP   1s
+
+
+Command: kubectl get endpoints bookflow-broken-service -n bookflow
+NAME                      ENDPOINTS   AGE
+bookflow-broken-service   <none>      1s
+
+
+[STEP 2: DIAGNOSIS VIA KUBECTL DESCRIBE]
+Command: kubectl describe svc bookflow-broken-service -n bookflow
+Name:                     bookflow-broken-service
+Namespace:                bookflow
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=label-that-does-not-exist
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.105.230.145
+IPs:                      10.105.230.145
+Port:                     <unset>  8000/TCP
+TargetPort:               8000/TCP
+Endpoints:                
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+
+Command: kubectl get pods -n bookflow --show-labels
+NAME                                 READY   STATUS             RESTARTS      AGE   LABELS
+bookflow-backend-746765fdd7-t5dgz    0/1     InvalidImageName   0             10m   app=bookflow-backend,pod-template-hash=746765fdd7
+bookflow-backend-9c77c96b5-6rlcg     1/1     Running            0             17m   app=bookflow-backend,pod-template-hash=9c77c96b5
+bookflow-backend-9c77c96b5-mvsxz     1/1     Running            0             15m   app=bookflow-backend,pod-template-hash=9c77c96b5
+bookflow-frontend-685dd69554-bn7gf   1/1     Running            1 (17m ago)   17m   app=bookflow-frontend,pod-template-hash=685dd69554
+bookflow-frontend-685dd69554-pg7ll   1/1     Running            1 (17m ago)   17m   app=bookflow-frontend,pod-template-hash=685dd69554
+bookflow-frontend-b5d448d8-sc7gt     0/1     InvalidImageName   0             10m   app=bookflow-frontend,pod-template-hash=b5d448d8
+bookflow-postgres-bcfb4d9d6-w4575    1/1     Running            1 (15m ago)   17m   app=bookflow-postgres,pod-template-hash=bcfb4d9d6
+
+
+[ROOT CAUSE ANALYSIS]
+1. Symptom: Service 'bookflow-broken-service' has ENDPOINTS '<none>'. Client requests routing to this service would fail with 502/503 or connection refused.
+2. Direct Cause: The Service definition specifies selector 'app=label-that-does-not-exist'.
+3. Comparison: Target backend pods in namespace 'bookflow' are labeled 'app=bookflow-backend'. No pods match the configured selector.
+4. Corrective Action: Patch or update the Service selector to match the target Pod label 'app: bookflow-backend'.
+
+[STEP 3: REMEDIATION & VERIFICATION]
+Command: kubectl patch svc bookflow-broken-service -n bookflow -p '{\"spec\":{\"selector\":{\"app\":\"bookflow-backend\"}}}'
+Command: kubectl get endpoints bookflow-broken-service -n bookflow
+NAME                      ENDPOINTS                         AGE
+bookflow-broken-service   10.1.1.124:8000,10.1.1.131:8000   2s
+
+
+[STEP 4: CLEANUP]
+Command: kubectl delete svc bookflow-broken-service -n bookflow
+Cleanup completed successfully.

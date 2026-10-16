@@ -1,0 +1,31 @@
+﻿Total active targets: 22
+Pool: serviceMonitor/bookflow/bookflow-backend/0
+  URL: http://10.1.1.131:8000/metrics
+  Health: up
+  LastError: 
+  Labels: {'container': 'backend', 'endpoint': 'http', 'instance': '10.1.1.131:8000', 'job': 'backend', 'namespace': 'bookflow', 'pod': 'bookflow-backend-9c77c96b5-mvsxz', 'service': 'backend'}
+Pool: serviceMonitor/bookflow/bookflow-backend/0
+  URL: http://10.1.1.124:8000/metrics
+  Health: up
+  LastError: 
+  Labels: {'container': 'backend', 'endpoint': 'http', 'instance': '10.1.1.124:8000', 'job': 'backend', 'namespace': 'bookflow', 'pod': 'bookflow-backend-9c77c96b5-6rlcg', 'service': 'backend'}
+Pool: serviceMonitor/bookflow/bookflow-backend/0
+  URL: http://10.1.1.132:8000/metrics
+  Health: down
+  LastError: Get "http://10.1.1.132:8000/metrics": dial tcp 10.1.1.132:8000: connect: connection refused
+  Labels: {'container': 'backend', 'endpoint': 'http', 'instance': '10.1.1.132:8000', 'job': 'bookflow-backend', 'namespace': 'bookflow', 'pod': 'bookflow-backend-746765fdd7-t5dgz', 'service': 'bookflow-backend'}
+Pool: serviceMonitor/bookflow/bookflow-backend/0
+  URL: http://10.1.1.131:8000/metrics
+  Health: up
+  LastError: 
+  Labels: {'container': 'backend', 'endpoint': 'http', 'instance': '10.1.1.131:8000', 'job': 'bookflow-backend', 'namespace': 'bookflow', 'pod': 'bookflow-backend-9c77c96b5-mvsxz', 'service': 'bookflow-backend'}
+Pool: serviceMonitor/bookflow/bookflow-backend/0
+  URL: http://10.1.1.124:8000/metrics
+  Health: up
+  LastError: 
+  Labels: {'container': 'backend', 'endpoint': 'http', 'instance': '10.1.1.124:8000', 'job': 'bookflow-backend', 'namespace': 'bookflow', 'pod': 'bookflow-backend-9c77c96b5-6rlcg', 'service': 'bookflow-backend'}
+Pool: serviceMonitor/bookflow/bookflow-backend/0
+  URL: http://10.1.1.132:8000/metrics
+  Health: down
+  LastError: Get "http://10.1.1.132:8000/metrics": dial tcp 10.1.1.132:8000: connect: connection refused
+  Labels: {'container': 'backend', 'endpoint': 'http', 'instance': '10.1.1.132:8000', 'job': 'backend', 'namespace': 'bookflow', 'pod': 'bookflow-backend-746765fdd7-t5dgz', 'service': 'backend'}
