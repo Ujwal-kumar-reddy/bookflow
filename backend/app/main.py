@@ -3,7 +3,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func, select, or_
 from sqlalchemy.orm import Session
-from prometheus_fastapi_instrumentator import Instrumentator
+from prometheus_client import make_asgi_app
 
 from .config import settings
 from .db import get_db
@@ -30,7 +30,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-Instrumentator().instrument(app).expose(app, endpoint="/metrics")
+metrics_app = make_asgi_app()
+app.mount("/metrics", metrics_app)
 
 @app.get("/")
 def root():
