@@ -81,7 +81,7 @@ jobs:
           docker build -t ${{ env.IMAGE_FRONTEND }}:${{ github.sha }} ./frontend
 
       - name: Trivy Container Vulnerability Scan (Backend)
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.IMAGE_BACKEND }}:${{ github.sha }}
           scan-type: 'image'
@@ -90,7 +90,7 @@ jobs:
           exit-code: '1'
 
       - name: Trivy Container Vulnerability Scan (Frontend)
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.IMAGE_FRONTEND }}:${{ github.sha }}
           scan-type: 'image'

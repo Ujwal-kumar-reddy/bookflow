@@ -13,7 +13,7 @@ This index maps every required submission artifact defined in [GRADING.md](../GR
 | **M2** | Backend test suite | `backend/tests/` | Pytest source files | 15/15 passing in 0.35s | LOCALLY VERIFIED |
 | **M2** | Pytest configuration / fixtures | `backend/pytest.ini`, `backend/conftest.py` | Config / Fixtures | Configured & verified | LOCALLY VERIFIED |
 | **M2** | Terminal output of passing tests (`pytest -v`) | `evidence/m2-pytest.txt`, `evidence/m2-pytest.png` | Command log & Screenshot | 15/15 passed | LOCALLY VERIFIED |
-| **M3** | Public GitHub repository URL | `evidence/m3-repo-url.txt` | URL | Awaiting user remote | PENDING |
+| **M3** | Public GitHub repository URL | `evidence/m3-repo-url.txt` | URL | https://github.com/Ujwal-kumar-reddy/bookflow | LOCALLY VERIFIED |
 | **M3** | Commit history showing 10+ meaningful commits | `evidence/m3-git-history.png`, `evidence/m3-git-log.txt` | Screenshot & Git log | 15 commits created | LOCALLY VERIFIED |
 | **M3** | `.gitignore` excluding secrets, venv, cache | `.gitignore` | Config file | Completed | LOCALLY VERIFIED |
 | **M4** | Backend Dockerfile (non-root) | `backend/Dockerfile` | Dockerfile | UID 10001 (appuser) verified | LOCALLY VERIFIED |

@@ -20,7 +20,7 @@
 | **M2** | 5+ test cases covering 3+ API endpoints (15 tests written) | 4 | `backend/tests/test_api.py` | `pytest -v` | `evidence/m2-pytest.txt` | Completed | LOCALLY VERIFIED |
 | **M2** | Isolated test database (SQLite temp in-memory / StaticPool, no prod pollution) | 2 | `backend/tests/conftest.py` | `pytest -v` (0 disk files leftover) | `evidence/m2-pytest.txt` | Completed | LOCALLY VERIFIED |
 | **M2** | `pytest.ini` and `conftest.py` properly configured | 1 | `backend/pytest.ini`, `backend/tests/conftest.py` | `pytest -v` | `backend/pytest.ini` | Completed | LOCALLY VERIFIED |
-| **M3** | Public GitHub repository URL linked in submission | 2 | Git repository remote | `git remote -v` | `evidence/m3-repo-url.txt` | Awaiting empty remote URL | PENDING |
+| **M3** | Public GitHub repository URL linked in submission | 2 | Git repository remote | `git remote -v` | `evidence/m3-repo-url.txt` | Configured: https://github.com/Ujwal-kumar-reddy/bookflow | LOCALLY VERIFIED |
 | **M3** | Meaningful commit messages (15 commits created) | 2 | Git commit history | `git log --oneline` | `evidence/m3-git-history.png`, `evidence/m3-git-log.txt` | Completed | LOCALLY VERIFIED |
 | **M3** | `.gitignore` excludes `.env`, `__pycache__`, `node_modules`, `.venv`, `.tfvars` | 1 | `.gitignore` | `git status --ignored` | `.gitignore` | Completed | LOCALLY VERIFIED |
 | **M4** | `backend/Dockerfile` builds successfully | 2 | `backend/Dockerfile` | `docker compose up -d --build` | `evidence/m4-docker-compose.txt` | Completed | LOCALLY VERIFIED |
