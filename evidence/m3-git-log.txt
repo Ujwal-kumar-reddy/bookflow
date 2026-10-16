@@ -1,4 +1,4 @@
-* 3150a7c 2026-10-16 [Ujwal Kumar Reddy] test(security): add pre-push secrets and hygiene scan script
+﻿* 3150a7c 2026-10-16 [Ujwal Kumar Reddy] test(security): add pre-push secrets and hygiene scan script
 * e5a6fda 2026-10-16 [Ujwal Kumar Reddy] docs(evidence): update m3-git-log with 19 semantic commits
 * 84da33a 2026-10-16 [Ujwal Kumar Reddy] ci(github): pin trivy-action to v0.36.0 and document repository URL
 * 8f315ee 2026-10-16 [Ujwal Kumar Reddy] docs(evidence): update m3-git-log with 18 semantic commits

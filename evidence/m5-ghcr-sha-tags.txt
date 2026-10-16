@@ -1,13 +1,14 @@
-# GHCR Published Packages (Tagged with Git Commit SHA)
+﻿# GHCR Published Packages (Tagged with Git Commit SHA)
 
-Workflow Run: https://github.com/Ujwal-kumar-reddy/bookflow/actions/runs/38847422983
-Commit SHA: eff2520cbf801e2aa0fa8ba9724c489bb1552658
+Workflow Run: https://github.com/Ujwal-kumar-reddy/bookflow/actions/runs/38847996389
+Commit SHA: 2596dfbbcf9b71e4e4524f48de741c35cb7c386b
 
 Published Images:
-- ghcr.io/ujwal-kumar-reddy/bookflow-backend:eff2520cbf801e2aa0fa8ba9724c489bb1552658
-- ghcr.io/ujwal-kumar-reddy/bookflow-frontend:eff2520cbf801e2aa0fa8ba9724c489bb1552658
+- ghcr.io/ujwal-kumar-reddy/bookflow-backend:2596dfbbcf9b71e4e4524f48de741c35cb7c386b
+- ghcr.io/ujwal-kumar-reddy/bookflow-frontend:2596dfbbcf9b71e4e4524f48de741c35cb7c386b
 
 Registry: GitHub Container Registry (ghcr.io)
 Repository Owner: ujwal-kumar-reddy
-Tag Strategy: Full Git commit SHA (${{ github.sha }}), avoiding mutable 'latest' tags for immutability.
-Security Gate: Passed Aqua Security Trivy vulnerability scan (0 HIGH, 0 CRITICAL CVEs).
+Tag Strategy: Full Git commit SHA (${{ github.sha }}), avoiding mutable 'latest' tags for immutability and provenance.
+Security Gate: Passed Aqua Security Trivy container scan (0 HIGH, 0 CRITICAL CVEs on both images).
+Deploy Status: Deploy job cleanly skipped (guarded by vars.DEPLOY_ENABLED == 'true').

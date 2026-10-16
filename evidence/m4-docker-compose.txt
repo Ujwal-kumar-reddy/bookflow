@@ -1,4 +1,4 @@
-NAME                         IMAGE                      COMMAND                  SERVICE    CREATED          STATUS                    PORTS
-devops-capstone-backend-1    devops-capstone-backend    "sh -c 'alembic upgrâ€¦"   backend    30 minutes ago   Up 29 minutes (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
-devops-capstone-frontend-1   devops-capstone-frontend   "/docker-entrypoint.â€¦"   frontend   30 minutes ago   Up 29 minutes (healthy)   0.0.0.0:3000->8080/tcp, [::]:3000->8080/tcp
-devops-capstone-postgres-1   postgres:16-alpine         "docker-entrypoint.sâ€¦"   postgres   30 minutes ago   Up 30 minutes (healthy)   0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+﻿NAME                         IMAGE                      COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+devops-capstone-backend-1    devops-capstone-backend    "sh -c 'alembic upgrÃ¢â‚¬Â¦"   backend    30 minutes ago   Up 29 minutes (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+devops-capstone-frontend-1   devops-capstone-frontend   "/docker-entrypoint.Ã¢â‚¬Â¦"   frontend   30 minutes ago   Up 29 minutes (healthy)   0.0.0.0:3000->8080/tcp, [::]:3000->8080/tcp
+devops-capstone-postgres-1   postgres:16-alpine         "docker-entrypoint.sÃ¢â‚¬Â¦"   postgres   30 minutes ago   Up 30 minutes (healthy)   0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
