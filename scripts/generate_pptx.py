@@ -54,7 +54,7 @@ def create_presentation():
         num_box = slide.shapes.add_textbox(Inches(11.8), Inches(0.4), Inches(0.8), Inches(0.4))
         tf_num = num_box.text_frame
         p_num = tf_num.paragraphs[0]
-        p_num.text = f"{slide_num}/10"
+        p_num.text = f"{slide_num}/11"
         p_num.alignment = PP_ALIGN.RIGHT
         p_num.font.size = Pt(12)
         p_num.font.bold = True
@@ -442,14 +442,55 @@ def create_presentation():
         s9.shapes.add_picture(img9_path, Inches(5.7), Inches(1.85), Inches(6.6), Inches(4.7))
 
     # ==========================================================
-    # SLIDE 10: Capstone Summary & Production Takeaways (2x2 Grid)
+    # SLIDE 10: AWS Cloud Deployment & Amazon EKS Architecture
     # ==========================================================
     s10 = prs.slides.add_slide(blank_slide_layout)
     add_background(s10)
-    add_header(s10, "Summary & Impact", "Capstone Deliverables & DevOps Mastery", 10)
+    add_header(s10, "Cloud Infrastructure", "AWS Cloud Deployment & Amazon EKS Architecture", 10)
+
+    # Card 1: VPC
+    add_card(s10, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), title="Amazon VPC & Network Topology", border_color=AMBER)
+    tb10_1 = s10.shapes.add_textbox(Inches(1.0), Inches(2.3), Inches(5.2), Inches(4.3))
+    tf10_1 = tb10_1.text_frame
+    tf10_1.word_wrap = True
+    vpc_pts = [
+        ("AWS Region ap-south-1 (Mumbai)", "High-availability deployment across dual AZs (ap-south-1a, ap-south-1b)."),
+        ("Public & Private Subnet Tiering", "Dual public subnets (10.20.101.0/24, 10.20.102.0/24) with ELB tags + dual private subnets with NAT Gateway."),
+        ("Automated Terraform Provisioning", "18 cloud resources provisioned via declarative HCL modules in terraform/ directory."),
+        ("Production Ingress & Security Groups", "Tight network security rules isolating worker nodes while exposing Ingress.")
+    ]
+    for idx, (title, desc) in enumerate(vpc_pts):
+        p_t = tf10_1.paragraphs[0] if idx == 0 else tf10_1.add_paragraph()
+        p_t.text = f"▸ {title}: {desc}"
+        p_t.font.size = Pt(12)
+        p_t.font.color.rgb = TEXT_MAIN
+
+    # Card 2: EKS
+    add_card(s10, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), title="Managed Amazon EKS Cluster", border_color=AMBER)
+    tb10_2 = s10.shapes.add_textbox(Inches(7.0), Inches(2.3), Inches(5.3), Inches(4.3))
+    tf10_2 = tb10_2.text_frame
+    tf10_2.word_wrap = True
+    eks_pts = [
+        ("Amazon EKS 1.31 Control Plane", "Fully managed Kubernetes cluster bookflow-eks with public endpoint and IAM RBAC integration."),
+        ("Managed Worker Node Group", "Dual t3.medium EC2 worker nodes with auto-repair and dynamic cluster autoscaling (2 to 4 nodes)."),
+        ("AWS EBS CSI Persistent Storage", "AWS EBS CSI driver add-on attached to gp3 StorageClasses for PostgreSQL database durability."),
+        ("Multi-Tier BookFlow Workloads", "Frontend (2 replicas) and backend (2 replicas) running healthy on AWS cloud nodes.")
+    ]
+    for idx, (title, desc) in enumerate(eks_pts):
+        p_t = tf10_2.paragraphs[0] if idx == 0 else tf10_2.add_paragraph()
+        p_t.text = f"▸ {title}: {desc}"
+        p_t.font.size = Pt(12)
+        p_t.font.color.rgb = TEXT_MAIN
+
+    # ==========================================================
+    # SLIDE 11: Capstone Summary & Production Takeaways (2x2 Grid)
+    # ==========================================================
+    s11 = prs.slides.add_slide(blank_slide_layout)
+    add_background(s11)
+    add_header(s11, "Summary & Impact", "Capstone Deliverables & DevOps Mastery", 11)
 
     summary_boxes = [
-        ("100% Verified Local Stack", "Docker Desktop Kubernetes running 5/5 healthy pods, NGINX Ingress on port 8088, and persistent PostgreSQL storage surviving pod restarts."),
+        ("100% Verified Multi-Tier Stack", "Kubernetes running 5/5 healthy pods, NGINX Ingress on port 8088, and persistent PostgreSQL storage surviving pod restarts."),
         ("Security First & Cloud Infrastructure", "Non-root container execution (UID 10001 / 101), automated pre-push secret audit passed with 0 leaked patterns, and modular Terraform IaC architected for high-availability cloud deployment."),
         ("Production CI/CD Automation", "GitHub Actions pipeline with 16/16 Pytest blocking gate, Trivy CVE security checks (0 CVEs), and immutable GHCR image tags."),
         ("Observability & 37 Evidence Artifacts", "Prometheus metrics scraping with target status UP, live 4-panel Grafana dashboard, HPA dynamic scaling, and 37 comprehensive evidence files.")
@@ -459,7 +500,7 @@ def create_presentation():
         row = idx // 2
         x = Inches(0.8 + col * 5.9)
         y = Inches(1.6 + row * 2.7)
-        c = s10.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(5.7), Inches(2.5))
+        c = s11.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(5.7), Inches(2.5))
         c.fill.solid()
         c.fill.fore_color.rgb = CARD_BG
         c.line.color.rgb = CARD_BORDER

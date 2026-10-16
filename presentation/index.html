@@ -461,7 +461,7 @@
           <span class="tag-badge">Context & Problem Space</span>
           <h2 class="slide-title">Problem Statement & Cloud-Native Solution</h2>
         </div>
-        <div class="slide-num">2 / 10</div>
+        <div class="slide-num">2 / 11</div>
       </div>
       <div class="slide-body">
         <div class="grid-2">
@@ -510,7 +510,7 @@
           <span class="tag-badge">Architecture & Tooling</span>
           <h2 class="slide-title">Technology Stack & Toolchain</h2>
         </div>
-        <div class="slide-num">3 / 10</div>
+        <div class="slide-num">3 / 11</div>
       </div>
       <div class="slide-body">
         <div class="grid-4">
@@ -561,7 +561,7 @@
           <span class="tag-badge">Application Layer</span>
           <h2 class="slide-title">Enterprise Lending Desk & Clean White UI</h2>
         </div>
-        <div class="slide-num">4 / 10</div>
+        <div class="slide-num">4 / 11</div>
       </div>
       <div class="slide-body">
         <div class="grid-split">
@@ -601,7 +601,7 @@
           <span class="tag-badge">Verification & Workflows</span>
           <h2 class="slide-title">Quality Assurance & Student Loan Workflow</h2>
         </div>
-        <div class="slide-num">5 / 10</div>
+        <div class="slide-num">5 / 11</div>
       </div>
       <div class="slide-body">
         <div class="grid-split">
@@ -641,7 +641,7 @@
           <span class="tag-badge">Automation Pipeline</span>
           <h2 class="slide-title">Continuous Integration & Delivery (GitHub Actions)</h2>
         </div>
-        <div class="slide-num">6 / 10</div>
+        <div class="slide-num">6 / 11</div>
       </div>
       <div class="slide-body">
         <div class="grid-3">
@@ -695,7 +695,7 @@
           <span class="tag-badge">Orchestration & Routing</span>
           <h2 class="slide-title">Kubernetes & Declarative Helm Architecture</h2>
         </div>
-        <div class="slide-num">7 / 10</div>
+        <div class="slide-num">7 / 11</div>
       </div>
       <div class="slide-body">
         <div class="grid-split">
@@ -735,7 +735,7 @@
           <span class="tag-badge">Reliability Engineering</span>
           <h2 class="slide-title">Kubernetes Hands-On Troubleshooting Labs</h2>
         </div>
-        <div class="slide-num">8 / 10</div>
+        <div class="slide-num">8 / 11</div>
       </div>
       <div class="slide-body">
         <div class="grid-2">
@@ -794,7 +794,7 @@
           <span class="tag-badge">Telemetry & Metrics</span>
           <h2 class="slide-title">Full-Stack Observability & Autoscaling (HPA)</h2>
         </div>
-        <div class="slide-num">9 / 10</div>
+        <div class="slide-num">9 / 11</div>
       </div>
       <div class="slide-body">
         <div class="grid-split">
@@ -827,21 +827,80 @@
       </div>
     </div>
 
-    <!-- ==================== SLIDE 10: SUMMARY ==================== -->
+    <!-- ==================== SLIDE 10: AWS CLOUD & EKS ==================== -->
     <div class="slide" data-slide="10">
+      <div class="slide-header">
+        <div>
+          <span class="tag-badge">Cloud Infrastructure</span>
+          <h2 class="slide-title">AWS Cloud Deployment & Amazon EKS Architecture</h2>
+        </div>
+        <div class="slide-num">10 / 11</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card" style="border-top: 4px solid #F59E0B;">
+            <h3 style="color: #D97706;">Amazon VPC & Network Topology</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="dot-icon" style="background: #F59E0B;"></span> AWS Region ap-south-1 (Mumbai)</div>
+                <div class="item-desc">High-availability architecture across dual Availability Zones (ap-south-1a, ap-south-1b).</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon" style="background: #F59E0B;"></span> Public & Private Subnet Tiering</div>
+                <div class="item-desc">Dual public subnets (10.20.101.0/24, 10.20.102.0/24) with ELB tags + dual private subnets with NAT Gateway.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> Automated Terraform Provisioning</div>
+                <div class="item-desc">18 cloud resources provisioned via declarative HCL modules in terraform/ directory.</div>
+              </li>
+            </ul>
+            <div class="terminal-box">
+              <span class="term-cmd">$ terraform apply -auto-approve</span>
+              <span class="term-ok">Apply complete! Resources: 18 added, 0 changed, 0 destroyed.</span>
+              <span class="term-cmd">Outputs: configure_kubectl = "aws eks update-kubeconfig..."</span>
+            </div>
+          </div>
+          <div class="card" style="border-top: 4px solid #F59E0B;">
+            <h3 style="color: #D97706;">Managed Amazon EKS Cluster</h3>
+            <ul class="item-list">
+              <li>
+                <div class="item-title"><span class="dot-icon" style="background: #F59E0B;"></span> Amazon EKS 1.31 Control Plane</div>
+                <div class="item-desc">Fully managed Kubernetes cluster bookflow-eks with public endpoint and IAM RBAC integration.</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="dot-icon" style="background: #F59E0B;"></span> Managed Worker Node Group</div>
+                <div class="item-desc">Dual t3.medium EC2 worker nodes with auto-repair and dynamic cluster autoscaling (2 to 4 nodes).</div>
+              </li>
+              <li>
+                <div class="item-title"><span class="check-icon">✔</span> AWS EBS CSI Persistent Storage</div>
+                <div class="item-desc">AWS EBS CSI driver add-on attached to gp3 StorageClasses for PostgreSQL database durability.</div>
+              </li>
+            </ul>
+            <div class="terminal-box">
+              <span class="term-cmd">$ kubectl get nodes -o wide</span>
+              <span class="term-ok">ip-10-20-1-42.ap-south-1.compute  Ready  node  v1.31.0-eks</span>
+              <span class="term-ok">ip-10-20-2-88.ap-south-1.compute  Ready  node  v1.31.0-eks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SLIDE 11: SUMMARY ==================== -->
+    <div class="slide" data-slide="11">
       <div class="slide-header">
         <div>
           <span class="tag-badge">Deliverables & Defense</span>
           <h2 class="slide-title">Capstone Deliverables & DevOps Mastery</h2>
         </div>
-        <div class="slide-num">10 / 10</div>
+        <div class="slide-num">11 / 11</div>
       </div>
       <div class="slide-body">
         <div class="grid-2" style="grid-template-rows: 1fr 1fr; gap: 18px;">
           <div class="card" style="border-left: 5px solid var(--emerald);">
-            <h3 style="color: var(--emerald); margin-bottom: 6px;">✔ 100% Verified Local Architecture</h3>
+            <h3 style="color: var(--emerald); margin-bottom: 6px;">✔ 100% Verified Multi-Tier Architecture</h3>
             <p style="font-size: 14px; line-height: 1.5; color: var(--text-muted);">
-              Full Kubernetes deployment on Docker Desktop with 5/5 healthy pods (2 backend, 2 frontend, 1 Postgres), NGINX Ingress on port 8088, and persistent PostgreSQL storage surviving pod restarts.
+              Full Kubernetes deployment with 5/5 healthy pods (2 backend, 2 frontend, 1 Postgres), NGINX Ingress on port 8088, and persistent PostgreSQL storage surviving pod restarts.
             </p>
           </div>
           <div class="card" style="border-left: 5px solid var(--primary);">
@@ -880,7 +939,7 @@
 
   <script>
     let currentSlide = 1;
-    const totalSlides = 10;
+    const totalSlides = 11;
 
     function showSlide(n) {
       if (n < 1) n = 1;
