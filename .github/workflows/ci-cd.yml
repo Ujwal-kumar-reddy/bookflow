@@ -22,6 +22,7 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip'
+          cache-dependency-path: backend/requirements.txt
 
       - name: Install Backend Dependencies
         working-directory: backend
@@ -85,6 +86,7 @@ jobs:
         with:
           image-ref: ${{ env.IMAGE_BACKEND }}:${{ github.sha }}
           scan-type: 'image'
+          format: 'table'
           severity: 'HIGH,CRITICAL'
           ignore-unfixed: true
           exit-code: '1'
@@ -94,6 +96,7 @@ jobs:
         with:
           image-ref: ${{ env.IMAGE_FRONTEND }}:${{ github.sha }}
           scan-type: 'image'
+          format: 'table'
           severity: 'HIGH,CRITICAL'
           ignore-unfixed: true
           exit-code: '1'
@@ -106,7 +109,7 @@ jobs:
   deploy:
     name: Deploy to Kubernetes Cluster
     needs: build-scan-push
-    if: github.ref == 'refs/heads/main' && vars.DEPLOY_ENABLED == 'true' && secrets.KUBE_CONFIG_DATA != ''
+    if: github.ref == 'refs/heads/main' && vars.DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
