@@ -1,3 +1,5 @@
+* 84da33a 2026-10-16 [Ujwal Kumar Reddy] ci(github): pin trivy-action to v0.36.0 and document repository URL
+* 8f315ee 2026-10-16 [Ujwal Kumar Reddy] docs(evidence): update m3-git-log with 18 semantic commits
 * e0c7c38 2026-10-16 [Ujwal Kumar Reddy] docs(progress): update PROGRESS.md with completed Phase 3 local verification
 * f42b4da 2026-10-16 [Ujwal Kumar Reddy] test(local): add Phase 3 verification scripts and genuine evidence
 * d14de63 2026-10-16 [Ujwal Kumar Reddy] fix(docker): add frontend healthcheck and ipv6 listener in nginx
