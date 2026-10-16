@@ -80,6 +80,25 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (books.length > 0) {
+      const params = new URLSearchParams(window.location.search);
+      const modalParam = params.get('modal');
+      if (modalParam === 'checkout') {
+        const target = books.find((b) => b.status === 'AVAILABLE') || books[0];
+        setCheckoutTarget(target);
+        setCheckoutBorrower('Rohan Verma (Roll #2024-CS-088)');
+        setCheckoutDays(14);
+      } else if (modalParam === 'add') {
+        setShowAddModal(true);
+      }
+      const filterParam = params.get('filter');
+      if (filterParam) {
+        setStatusFilter(filterParam);
+      }
+    }
+  }, [books]);
+
   const handleCreateBook = async (e) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);

@@ -9,7 +9,9 @@ This index maps every required submission artifact defined in [GRADING.md](../GR
 | **M1** | Python dependencies | `backend/requirements.txt` | Requirements file | Pinned exact versions | LOCALLY VERIFIED |
 | **M1** | Frontend source files | `frontend/` | Source code (React/Vite) | Clean build (2.96s) | LOCALLY VERIFIED |
 | **M1** | Docker Compose definition | `docker-compose.yml` | Compose YAML | Completed | LOCALLY VERIFIED |
-| **M1** | Browser screenshot of running application | `evidence/m1-app-browser.png` | Screenshot | Verified at http://localhost:3000 | LOCALLY VERIFIED |
+| **M1** | Browser screenshot of running application | `evidence/m1-app-browser.png` | Screenshot | Verified at http://localhost:3000 (White Theme) | LOCALLY VERIFIED |
+| **M1** | Browser screenshot of student loan modal workflow | `evidence/m1-loan-modal.png` | Screenshot | Loan modal verified at localhost:3000 | LOCALLY VERIFIED |
+| **M1** | Browser screenshot of add book modal workflow | `evidence/m1-add-modal.png` | Screenshot | Add book modal verified at localhost:3000 | LOCALLY VERIFIED |
 | **M1** | REST API CRUD terminal execution | `evidence/m1-api-crud.txt` | Command log | 4+ endpoints tested | LOCALLY VERIFIED |
 | **M1** | Frontend production build output | `evidence/m1-frontend-build.txt` | Command log | Vite build passed | LOCALLY VERIFIED |
 | **M2** | Backend test suite | `backend/tests/test_api.py` | Pytest source files | 16/16 passing in 0.40s | LOCALLY VERIFIED |
